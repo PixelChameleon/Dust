@@ -14,7 +14,9 @@ namespace GlobalScripts {
 
         private void Start() {
             // TODO: Load items from configuration file instead of hardcoding them.
-            _itemRegistry.Add(0, new ItemStack(0, "Key")); // Using a dictionary to make lookups instant.
+            _itemRegistry.Add(0, new ItemStack(0, "Key"));
+            SceneManager.LoadScene(1, LoadSceneMode.Additive);
+            //Debug.LogError("Scenes: " + SceneManager.sceneCount + "/" + SceneManager.sceneCountInBuildSettings);
         }
 
         public ItemStack GetItemStack(int id) {
