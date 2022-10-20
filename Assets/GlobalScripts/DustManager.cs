@@ -15,7 +15,9 @@ namespace GlobalScripts {
         private void Start() {
             // TODO: Load items from configuration file instead of hardcoding them.
             _itemRegistry.Add(0, new ItemStack(0, "Key"));
-            SceneManager.LoadScene(1, LoadSceneMode.Additive);
+            if (!Application.isEditor) { // Scene loading behaves differently in the editor for some reason...
+                SceneManager.LoadScene(_currentSceneID, LoadSceneMode.Additive);
+            }
             //Debug.LogError("Scenes: " + SceneManager.sceneCount + "/" + SceneManager.sceneCountInBuildSettings);
         }
 
