@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
+using Vector3 = UnityEngine.Vector3;
 
 namespace GlobalScripts {
     public class PlayerScript : MonoBehaviour {
@@ -14,9 +15,12 @@ namespace GlobalScripts {
             _agent = GetComponent<NavMeshAgent>();
             camera = GetComponentInChildren<Camera>();
             manager.player = this; // make sure DustSceneManager always knows about the current player object
+            Debug.LogError("Initialized player");
         }
     
         private void Update() {
+            float scale = (float) (1 - gameObject.transform.position.z * 0.033);
+            gameObject.transform.localScale = new Vector3(scale, scale, scale);
             if (!Input.GetMouseButtonDown(0)) return;
             RaycastHit hit;
 
