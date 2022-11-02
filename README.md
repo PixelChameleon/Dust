@@ -4,7 +4,9 @@
 * [Github Desktop](https://desktop.github.com) herunterladen
 * [Kurzes Git-Tutorial mit Bildern](https://imgur.com/a/PhLacwV)
 
-### Dokumentation
+### [Projekt zur Organisation](https://github.com/users/Malfrador/projects/3)
+
+## Dokumentation
 
 * **Spieler & Bewegung**
   * Die Spielwelt ist 3D, da sonst die Navigation nicht gut funktioniert. Die Kamera schwebt über dem Spieler und ist orthografisch, es sieht deswegen aus wie 2D.
