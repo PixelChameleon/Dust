@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using GlobalScripts.combat;
 using UnityEngine;
 using UnityEngine.AI;
 using Vector3 = UnityEngine.Vector3;
@@ -10,6 +11,8 @@ namespace GlobalScripts {
         public Camera camera;
         public DustManager manager;
         private IDictionary<ItemStack, int> _inventory = new Dictionary<ItemStack, int>();
+        
+        protected LastCombatAction[] LastActions;
 
         private void Start() {
             _agent = GetComponent<NavMeshAgent>();
