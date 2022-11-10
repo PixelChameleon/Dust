@@ -22,8 +22,6 @@ namespace GlobalScripts {
         }
     
         private void Update() {
-            float scale = (float) (1 - gameObject.transform.position.z * 0.033);
-            gameObject.transform.localScale = new Vector3(scale, scale, scale);
             if (!Input.GetMouseButtonDown(0)) return;
             RaycastHit hit;
 

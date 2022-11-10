@@ -12,6 +12,7 @@ namespace GlobalScripts.entity {
         public IDictionary<int, AbstractAIGoal> CombatAIGoals = new Dictionary<int, AbstractAIGoal>();
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
+        public bool friendly = false;
 
         public CombatManager CombatManager { get; private set; }
 
