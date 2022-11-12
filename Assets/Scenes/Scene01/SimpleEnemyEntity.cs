@@ -5,8 +5,8 @@ using GlobalScripts.entity.ai;
 namespace Scenes.Scene01 {
     public class SimpleEnemyEntity : DustEntity{
         private void Start() {
-            IdleAIGoals.Add(1, new RandomWalkGoal(this));
-            InvokeRepeating("AIStep", 5.0f, 5.0f);
+            base.Start();
+            //IdleAIGoals.Add(1, new FollowPathGoal(this));
         }
     }
 }
