@@ -9,6 +9,7 @@ namespace GlobalScripts {
 
         private int _currentSceneID = 1;
         public PlayerScript player;
+        public GameObject bullet;
 
         private void Start() {
             // TODO: Load items from configuration file instead of hardcoding them.

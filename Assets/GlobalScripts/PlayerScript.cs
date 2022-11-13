@@ -1,37 +1,92 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using GlobalScripts.combat;
+using GlobalScripts.entity;
 using UnityEngine;
 using UnityEngine.AI;
-using Vector3 = UnityEngine.Vector3;
+using Slider = UnityEngine.UI.Slider;
 
 namespace GlobalScripts {
-    public class PlayerScript : MonoBehaviour {
+    public class PlayerScript : MonoBehaviour, ICombatant {
         private NavMeshAgent _agent;
         public Camera camera;
         public DustManager manager;
         private IDictionary<ItemStack, int> _inventory = new Dictionary<ItemStack, int>();
-        
-        protected LastCombatAction[] LastActions;
+
+        public int MaxHealth = 100;
+        public int CurrentHealth;
+        public float MaxStamina = 100f;
+        public float CurrentStamina;
+
+        public List<LastCombatAction> LastCombatActions = new();
+        public bool isInCombat = false;
+        private bool isCombatMoving = false;
+        public CombatUI CombatUI;
+        public CombatManager CombatManager;
+        public bool canAct = true;
+        public bool choseTurn = false;
+        public GameObject enemy; // temp
+
+        public Weapon Weapon = new Weapon("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
         private void Start() {
             _agent = GetComponent<NavMeshAgent>();
             camera = GetComponentInChildren<Camera>();
             manager.player = this; // make sure DustSceneManager always knows about the current player object
             Debug.LogError("Initialized player");
+            CombatManager = new CombatManager(this, enemy.GetComponent<DustEntity>());
+            isInCombat = true;
+            CurrentHealth = MaxHealth;
+            CurrentStamina = MaxStamina;
+            CombatUI.Stamina.GetComponent<Slider>().value = CurrentStamina;
+            CombatUI.PlayerHP.GetComponent<Slider>().value = CurrentHealth;
+            LastCombatActions.Add(new LastCombatAction(this, PlayerMove.Move, gameObject.transform.position, gameObject.transform.position));
         }
     
         private void Update() {
+            if (!canAct) {
+                return;
+            }
+            if (isCombatMoving && !_agent.hasPath) {
+                isCombatMoving = false;
+                return;
+            } 
+            if (isInCombat && isCombatMoving && _agent.hasPath) {
+                if (CurrentStamina <= 0) {
+                    _agent.isStopped = true;
+                    isCombatMoving = false;
+                    CombatManager.DoAITurn();
+                } 
+                CurrentStamina = Mathf.Clamp(CurrentStamina - (20.0f * Time.deltaTime), 0.0f, MaxStamina);
+                CombatUI.Stamina.GetComponent<Slider>().value = CurrentStamina;
+            }
             if (!Input.GetMouseButtonDown(0)) return;
             RaycastHit hit;
 
-            if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100)) return;
+            if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100) || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+            if (isInCombat) {
+                if (CombatManager.SelectedMove != PlayerMove.Move) return;
+                CombatMove(hit);
+                choseTurn = true;
+                return;
+            }
+
             if (hit.transform.gameObject.CompareTag("Clickable")) {
                 var clickable = hit.transform.gameObject.GetComponent<IClickableGameObject>();
                 clickable.OnClick(this);
                 return;
             }
             _agent.destination = hit.point;
+        }
+
+        private void CombatMove(RaycastHit hit) {
+            //var distance = Vector3.Distance(gameObject.transform.position, hit.point);
+            if (isCombatMoving || !canAct) {
+                return;
+            }
+            _agent.destination = hit.point;
+            isCombatMoving = true;
         }
         
         //
@@ -70,6 +125,28 @@ namespace GlobalScripts {
             if (_inventory[itemStack] <= 0) {
                 _inventory.Remove(itemStack);
             }
+        }
+
+        public void Damage(int amount) {
+            CurrentHealth = Math.Max(0, CurrentHealth - amount);
+            Debug.Log(gameObject.name + " took " + amount + " damage. Health: " + CurrentHealth);
+            CombatManager.UpdateHealth();
+        }
+
+        public int GetHealth() {
+            return CurrentHealth;
+        }
+        
+        public void Die() {
+            // Deaded.
+        }
+        
+        public Weapon GetWeapon() {
+            return Weapon;
+        }
+        
+        public GameObject GetGameObject() {
+            return gameObject;
         }
     }
 }
