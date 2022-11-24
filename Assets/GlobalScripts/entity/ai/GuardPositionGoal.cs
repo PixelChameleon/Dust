@@ -7,11 +7,15 @@ namespace GlobalScripts.entity.ai {
         private float _maxDistance = 5f;
 
         public GuardPositionGoal(DustEntity entity) : base(entity) {
-            
+
+        }
+
+        public override bool ShouldStart() {
+            return true;
         }
 
         public override void OnStart() {
-          
+
         }
 
         public override void Run() {
@@ -20,6 +24,7 @@ namespace GlobalScripts.entity.ai {
                 Agent.destination = _guardPosition;
                 return;
             }
+
             Vector3 target;
             target.x = +Random.Range(-1.5f, 1.5f);
             target.z = +Random.Range(-1.5f, 1.5f);
@@ -29,11 +34,7 @@ namespace GlobalScripts.entity.ai {
         }
 
         public override void OnStop() {
-            
-        }
 
-        public override void Cancel() {
-            Agent.destination = _guardPosition;
         }
     }
 }

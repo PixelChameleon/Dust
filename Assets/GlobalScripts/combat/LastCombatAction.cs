@@ -3,13 +3,13 @@
 namespace GlobalScripts.combat {
     public struct LastCombatAction {
 
-        public long Timestamp;
+        public PlayerScript Player;
         public PlayerMove Move;
         public Vector3 StartLocation;
         public Vector3 EndLocation;
         
-        public LastCombatAction(long timestamp, PlayerMove move, Vector3 startLocation, Vector3 endLocation) {
-            Timestamp = timestamp;
+        public LastCombatAction(PlayerScript player, PlayerMove move, Vector3 startLocation, Vector3 endLocation) {
+            Player = player;
             Move = move;
             StartLocation = startLocation;
             EndLocation = endLocation;

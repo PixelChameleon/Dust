@@ -8,6 +8,10 @@ namespace GlobalScripts.entity.ai {
             
         }
 
+        public override bool ShouldStart() {
+            return true;
+        }
+
         public override void OnStart() {
           
         }
@@ -18,16 +22,12 @@ namespace GlobalScripts.entity.ai {
             target.x = +Random.Range(-2, 2);
             target.z = +Random.Range(-2, 2);
             target.y = pos.y;
-            Debug.Log("Moving to " + target);
             Agent.destination = target;
         }
 
         public override void OnStop() {
             
         }
-
-        public override void Cancel() {
-            
-        }
+        
     }
 }
