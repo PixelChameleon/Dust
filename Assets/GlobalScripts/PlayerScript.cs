@@ -26,7 +26,6 @@ namespace GlobalScripts {
         public CombatManager CombatManager;
         public bool canAct = true;
         public bool choseTurn = false;
-        public GameObject enemy; // temp
 
         public Weapon Weapon = new Weapon("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
@@ -35,8 +34,6 @@ namespace GlobalScripts {
             camera = GetComponentInChildren<Camera>();
             manager.player = this; // make sure DustSceneManager always knows about the current player object
             Debug.LogError("Initialized player");
-            CombatManager = new CombatManager(this, enemy.GetComponent<DustEntity>());
-            isInCombat = true;
             CurrentHealth = MaxHealth;
             CurrentStamina = MaxStamina;
             CombatUI.Stamina.GetComponent<Slider>().value = CurrentStamina;
@@ -72,11 +69,22 @@ namespace GlobalScripts {
                 return;
             }
 
-            if (hit.transform.gameObject.CompareTag("Clickable")) {
-                var clickable = hit.transform.gameObject.GetComponent<IClickableGameObject>();
+            var hitObject = hit.transform.gameObject;
+            if (hitObject.CompareTag("Clickable")) {
+                var clickable = hitObject.GetComponent<IClickableGameObject>();
                 clickable.OnClick(this);
                 return;
             }
+
+            var combatant = hitObject.GetComponent<ICombatant>();
+            if (combatant != null) {
+                CombatManager = new CombatManager(this, hitObject.GetComponent<DustEntity>());
+                isInCombat = !isInCombat;
+                CombatUI.enabled = isInCombat;
+                Debug.Log("Combat: " + isInCombat + " | Enemy: " + hitObject.name);
+                return;
+            }
+
             _agent.destination = hit.point;
         }
 
