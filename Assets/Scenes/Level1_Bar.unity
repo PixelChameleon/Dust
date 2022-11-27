@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 375844574}
   - component: {fileID: 375844573}
   m_Layer: 0
-  m_Name: FloorCollisionBox
+  m_Name: BarFloorCollisionBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2622,7 +2622,7 @@ GameObject:
   - component: {fileID: 1534398286}
   - component: {fileID: 1534398285}
   m_Layer: 0
-  m_Name: Grid
+  m_Name: BarGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
