@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using GlobalScripts;
+using GlobalScripts.combat;
+using GlobalScripts.entity;
+using GlobalScripts.entity.ai;
 using UnityEngine;
 
-public class Guard : MonoBehaviour
+public class Guard : DustEntity
 {
     public float speed = 3;
     public float waitTime = 2f;
@@ -22,10 +26,16 @@ public class Guard : MonoBehaviour
         }
 
         StartCoroutine(FollowPath(waypoints));
+        CombatAIGoals.Add(new CombatHideGoal(this));
+        CombatAIGoals.Add(new CombatReloadGoal(this));
+        CombatAIGoals.Add(new CombatShootGoal(this));
+        CombatAIGoals.Add(new CombatGetInShootingRangeGoal(this));
     }
 
-    IEnumerator FollowPath(Vector3[] waypoints)
-    {   // FollowPath and repeat
+    IEnumerator FollowPath(Vector3[] waypoints) {   // FollowPath and repeat
+        if (inCombat) {
+            yield return null;
+        }
         transform.position = waypoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointIndex];
@@ -51,9 +61,10 @@ public class Guard : MonoBehaviour
 
     }
 
-    IEnumerator TurnToFace(Vector3 lookTarget)
-    {   // Calculate the angle to face "LookTarget"
-
+    IEnumerator TurnToFace(Vector3 lookTarget) {   // Calculate the angle to face "LookTarget"
+        if (inCombat) {
+            yield return null;
+        }
         Vector3 dirToLookTarget = (lookTarget - transform.position).normalized;
         float targetAngle = 90 - Mathf.Atan2(dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
 
@@ -84,4 +95,5 @@ public class Guard : MonoBehaviour
         }
         Gizmos.DrawLine(prevoiusPosition, startPosition);
     }
+    
 }
