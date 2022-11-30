@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: wein umgekippt
+  m_Name: "t\xFCre rechts"
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 2ab4d4183e2b0cb409f0da659283997b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e9ad644f822241d44be9e43d559fd825, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1

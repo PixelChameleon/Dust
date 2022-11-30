@@ -21,6 +21,7 @@ namespace GlobalScripts.combat {
             player.CombatManager = this;
             Debug.Log("Initialized combat between " + player + " and " + enemy);
             player.CombatUI.CombatManager = this;
+            player.CombatUI.enabled = true;
             player.inCombat = true;
             enemy.inCombat = true;
             UpdateHealth();
