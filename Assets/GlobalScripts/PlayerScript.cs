@@ -20,7 +20,7 @@ namespace GlobalScripts {
         public float CurrentStamina;
 
         public List<LastCombatAction> LastCombatActions = new();
-        public bool isInCombat = false;
+        public bool inCombat = false;
         private bool isCombatMoving = false;
         public CombatUI CombatUI;
         public CombatManager CombatManager;
@@ -49,7 +49,7 @@ namespace GlobalScripts {
                 isCombatMoving = false;
                 return;
             } 
-            if (isInCombat && isCombatMoving && _agent.hasPath) {
+            if (inCombat && isCombatMoving && _agent.hasPath) {
                 if (CurrentStamina <= 0) {
                     _agent.isStopped = true;
                     isCombatMoving = false;
@@ -62,7 +62,7 @@ namespace GlobalScripts {
             RaycastHit hit;
 
             if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100) || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
-            if (isInCombat) {
+            if (inCombat) {
                 if (CombatManager.SelectedMove != PlayerMove.Move) return;
                 CombatMove(hit);
                 choseTurn = true;
@@ -79,9 +79,9 @@ namespace GlobalScripts {
             var combatant = hitObject.GetComponent<ICombatant>();
             if (combatant != null) {
                 CombatManager = new CombatManager(this, hitObject.GetComponent<DustEntity>());
-                isInCombat = !isInCombat;
-                CombatUI.enabled = isInCombat;
-                Debug.Log("Combat: " + isInCombat + " | Enemy: " + hitObject.name);
+                inCombat = !inCombat;
+                CombatUI.enabled = inCombat;
+                Debug.Log("Combat: " + inCombat + " | Enemy: " + hitObject.name);
                 return;
             }
 
