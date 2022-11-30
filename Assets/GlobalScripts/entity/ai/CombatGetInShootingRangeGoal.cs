@@ -21,7 +21,7 @@ namespace GlobalScripts.entity.ai {
                 target.x = +Random.Range(-5f, 5f);
                 target.z = +Random.Range(-5f, 5f);
                 target.y = pos.y;
-                if (Vector3.Distance(Entity.transform.position, Entity.CombatManager.Player.transform.position) > 1.5f && !Physics.Linecast(_playerPos, target)) {
+                if (/*Vector3.Distance(Entity.transform.position, Entity.CombatManager.Player.transform.position) > 1.5f && */ !Physics.Linecast(_playerPos, target)) {
                     Debug.Log("Found position at " + Vector3.Distance(Entity.transform.position, Entity.CombatManager.Player.transform.position));
                     break;
                 }

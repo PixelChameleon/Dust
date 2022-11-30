@@ -1,8 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using GlobalScripts.entity;
+using GlobalScripts.combat;
+using GlobalScripts.entity.ai;
+using GlobalScripts;
 
-public class Guard : MonoBehaviour
+public class Guard : DustEntity
 {
     public float speed = 3;
     public float waitTime = 2f;
@@ -14,12 +18,22 @@ public class Guard : MonoBehaviour
     float viewAngle;
 
     public Transform pathHolder;
-    Transform player;
+    PlayerScript player;
     Color orginialSpotlightColour;
 
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        base.Start();
+        Weapon = new Weapon("Minigun", 1, 10, 3, 0.2f, 4.0f);
+        //IdleAIGoals.Add(1, new FollowPathGoal(this));
+        CombatAIGoals.Add(new CombatHideGoal(this));
+        CombatAIGoals.Add(new CombatReloadGoal(this));
+        CombatAIGoals.Add(new CombatShootGoal(this));
+        CombatAIGoals.Add(new CombatGetInShootingRangeGoal(this));
+
+
+        const string Tag = "MainCamera";
+        player = GameObject.FindGameObjectWithTag(Tag).transform.gameObject.GetComponent<PlayerScript>();
         viewAngle = spotlight.spotAngle;
 
         orginialSpotlightColour = spotlight.color;
@@ -36,9 +50,17 @@ public class Guard : MonoBehaviour
 
     void Update()
     {
+        base.Update();
+
         if (CanSeePlayer())
         {
+
             spotlight.color = Color.red;
+            if (inCombat)
+            {
+                spotlight.enabled = false;
+
+            }
         }
         else
         {
@@ -48,32 +70,46 @@ public class Guard : MonoBehaviour
 
     bool CanSeePlayer()
     {
-        if( Vector3.Distance(transform.position, player.position) < viewDistance)
+        if(inCombat)
         {
-            Vector3 dirToPlayer = (player.position - transform.position).normalized;
+            return false;
+        }
+        if( Vector3.Distance(transform.position, player.transform.position) < viewDistance)
+        {
+            Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-            if(angleBetweenGuardAndPlayer < viewAngle /3f)
+            if(angleBetweenGuardAndPlayer < viewAngle /2f)
             {
-                if(!Physics.Linecast(transform.position,player.position,viewMask))
+                if(!Physics.Linecast(transform.position,player.transform.position,viewMask))
                 {
+                    new CombatManager(player, this);
                     return true;
                 }
             }
         }
+
+        
         return false;
 
     }
 
 
     IEnumerator FollowPath(Vector3[] waypoints)
-    {   // FollowPath and repeat
+    {
+       
+        // FollowPath and repeat
         transform.position = waypoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointIndex];
         transform.LookAt(targetWaypoint);
 
         while (true)
-        {   // Movement
+        {
+            if (inCombat)
+            {
+                break;            
+            }
+            // Movement
             transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
             if (transform.position == targetWaypoint)
             { // return to 0
@@ -93,7 +129,9 @@ public class Guard : MonoBehaviour
     }
 
     IEnumerator TurnToFace(Vector3 lookTarget)
-    {   // Calculate the angle to face "LookTarget"
+    {
+       
+        // Calculate the angle to face "LookTarget"
 
         Vector3 dirToLookTarget = (lookTarget - transform.position).normalized;
         float targetAngle = 90 - Mathf.Atan2(dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
