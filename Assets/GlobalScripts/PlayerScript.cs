@@ -26,8 +26,9 @@ namespace GlobalScripts {
         public CombatManager CombatManager;
         public bool canAct = true;
         public bool choseTurn = false;
+        public bool inventoryOpen = true; // TODO
 
-        public Weapon Weapon = new Weapon("Pistole", 1, 5, 3, 0.2f, 4.0f);
+        public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
         private void Start() {
             _agent = GetComponent<NavMeshAgent>();

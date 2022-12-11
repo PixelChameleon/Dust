@@ -9,7 +9,7 @@ namespace GlobalScripts {
         public void OnClick(PlayerScript player) {
             if (_alreadyCollected) return;
             _alreadyCollected = true;
-            player.AddItem(player.manager.GetItemStack(itemID), itemAmount);
+            player.AddItem(player.manager.ItemRegistry[itemID], itemAmount);
         }
     }
 }
