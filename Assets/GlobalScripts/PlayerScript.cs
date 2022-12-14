@@ -9,6 +9,9 @@ using Slider = UnityEngine.UI.Slider;
 
 namespace GlobalScripts {
     public class PlayerScript : MonoBehaviour, ICombatant {
+
+        private static float MAX_CLICK_DISTANCE = 5.0f;
+        
         private NavMeshAgent _agent;
         public Camera camera;
         public DustManager manager;
@@ -25,8 +28,9 @@ namespace GlobalScripts {
         public CombatUI CombatUI;
         public CombatManager CombatManager;
         public bool canAct = true;
+        public bool canMove = true;
         public bool choseTurn = false;
-        public bool inventoryOpen = true; // TODO
+        public bool inventoryOpen = false; // TODO
 
         public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
@@ -71,7 +75,7 @@ namespace GlobalScripts {
             }
 
             var hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Clickable")) {
+            if (hitObject.CompareTag("Clickable") && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE) {
                 var clickable = hitObject.GetComponent<IClickableGameObject>();
                 clickable.OnClick(this);
                 return;
@@ -86,7 +90,9 @@ namespace GlobalScripts {
                 return;
             }
 
-            _agent.destination = hit.point;
+            if (canMove) {
+                _agent.destination = hit.point;
+            }
         }
 
         private void CombatMove(RaycastHit hit) {
