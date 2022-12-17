@@ -4423,6 +4423,7 @@ MonoBehaviour:
   inCombat: 0
   CombatUI: {fileID: 1177419332}
   canAct: 1
+  canMove: 1
   choseTurn: 0
   inventoryOpen: 1
 --- !u!136 &2101256258

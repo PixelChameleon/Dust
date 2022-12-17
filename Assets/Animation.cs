@@ -7,7 +7,7 @@ using GlobalScripts.entity.ai;
 public class Animation : DustEntity
 
 {
-
+    public Animator animator;
     
  
     // Start is called before the first frame update
