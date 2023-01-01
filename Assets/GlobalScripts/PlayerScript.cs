@@ -15,6 +15,7 @@ namespace GlobalScripts {
         private NavMeshAgent _agent;
         public Camera camera;
         public DustManager manager;
+        public PlayerConversation conversation;
         private IDictionary<ItemStack, int> _inventory = new Dictionary<ItemStack, int>();
 
         public int MaxHealth = 100;
@@ -38,12 +39,12 @@ namespace GlobalScripts {
             _agent = GetComponent<NavMeshAgent>();
             camera = GetComponentInChildren<Camera>();
             manager.player = this; // make sure DustSceneManager always knows about the current player object
-            Debug.LogError("Initialized player");
             CurrentHealth = MaxHealth;
             CurrentStamina = MaxStamina;
             CombatUI.Stamina.GetComponent<Slider>().value = CurrentStamina;
             CombatUI.PlayerHP.GetComponent<Slider>().value = CurrentHealth;
             LastCombatActions.Add(new LastCombatAction(this, PlayerMove.Move, gameObject.transform.position, gameObject.transform.position));
+            conversation = gameObject.GetComponent<PlayerConversation>();
         }
     
         private void Update() {
