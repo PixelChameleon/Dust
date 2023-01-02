@@ -17,12 +17,11 @@ namespace GlobalScripts.entity.ai {
         public override bool Run() {
             var pos = Entity.gameObject.transform.position;
             Vector3 target = Entity.CombatManager.Player.transform.position;
-            for (var i = 0; i < 100; i++) {
+            for (var i = 0; i < 50; i++) {
                 target.x = +Random.Range(-5f, 5f);
                 target.z = +Random.Range(-5f, 5f);
                 target.y = pos.y;
-                if (/*Vector3.Distance(Entity.transform.position, Entity.CombatManager.Player.transform.position) > 1.5f && */ !Physics.Linecast(_playerPos, target)) {
-                    Debug.Log("Found position at " + Vector3.Distance(Entity.transform.position, Entity.CombatManager.Player.transform.position));
+                if (!Physics.Linecast(_playerPos, target)) {
                     break;
                 }
             }
