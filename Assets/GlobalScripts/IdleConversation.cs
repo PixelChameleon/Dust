@@ -26,14 +26,17 @@ public class IdleConversation : MonoBehaviour {
         var pos = parent.position;
         pos.y = 1.2f;
         _box.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1.2f);
+        _box.SetActive(false);
     }
 
     private void Converse() {
         _waitTime++;
         if (_waitTime > DisplayDurationPerMessage) {
+            _box.SetActive(false);
             _box.GetComponent<TextMeshPro>().text = "";
         }
         if (_waitTime >= MessageFrequency) {
+            _box.SetActive(true);
             _box.GetComponent<TextMeshPro>().text = NextMsg();
             _waitTime = 0;
         }

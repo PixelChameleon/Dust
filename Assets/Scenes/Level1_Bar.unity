@@ -3286,6 +3286,7 @@ GameObject:
   - component: {fileID: 561436878}
   - component: {fileID: 561436877}
   - component: {fileID: 561436879}
+  - component: {fileID: 561436880}
   m_Layer: 0
   m_Name: BAR_NPCS_19
   m_TagString: Untagged
@@ -3380,6 +3381,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &561436880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 561436876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d30f1016a709ab5499458892b3e4a7e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messages:
+  - Test
+  - Test2Twe
+  TextBoxPrefab: {fileID: 2591846245712716211, guid: c8937fdff1d31ef44884f1937c933206, type: 3}
+  DisplayDurationPerMessage: 2
+  MessageFrequency: 5
+  random: 0
 --- !u!1 &626126880
 GameObject:
   m_ObjectHideFlags: 0
@@ -6355,6 +6375,7 @@ MonoBehaviour:
   friendly: 0
   inCombat: 0
   isBusy: 0
+  animator: {fileID: 0}
 --- !u!195 &1272041365
 NavMeshAgent:
   m_ObjectHideFlags: 0
