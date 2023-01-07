@@ -47,6 +47,7 @@ namespace GlobalScripts {
             LastCombatActions.Add(new LastCombatAction(this, PlayerMove.Move, gameObject.transform.position, gameObject.transform.position));
             conversation = gameObject.GetComponent<PlayerConversation>();
             conversation.player = this;
+            AudioListener.volume = PlayerPrefs.GetFloat("volume");
         }
     
         private void Update() {
