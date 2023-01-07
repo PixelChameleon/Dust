@@ -32,6 +32,7 @@ namespace GlobalScripts {
         public bool canMove = true;
         public bool choseTurn = false;
         public bool inventoryOpen = false; // TODO
+        public bool isTalking = false;
 
         public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
@@ -45,6 +46,7 @@ namespace GlobalScripts {
             CombatUI.PlayerHP.GetComponent<Slider>().value = CurrentHealth;
             LastCombatActions.Add(new LastCombatAction(this, PlayerMove.Move, gameObject.transform.position, gameObject.transform.position));
             conversation = gameObject.GetComponent<PlayerConversation>();
+            conversation.player = this;
         }
     
         private void Update() {
@@ -76,22 +78,28 @@ namespace GlobalScripts {
             }
 
             var hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Clickable") && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE) {
+            if (hitObject.CompareTag("Clickable") && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE && !isTalking) {
                 var clickable = hitObject.GetComponent<IClickableGameObject>();
                 clickable.OnClick(this);
                 return;
             }
 
             var combatant = hitObject.GetComponent<ICombatant>();
-            if (combatant != null) {
+            if (combatant != null && !isTalking) {
                 CombatManager = new CombatManager(this, hitObject.GetComponent<DustEntity>());
                 inCombat = !inCombat;
                 CombatUI.enabled = inCombat;
                 Debug.Log("Combat: " + inCombat + " | Enemy: " + hitObject.name);
                 return;
             }
+            
+            var conversationHolder = hitObject.GetComponent<PlayerConversationHolder>();
+            if (conversationHolder != null && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE) {
+                conversation.ClickNext(conversationHolder);
+                return;
+            }
 
-            if (canMove) {
+            if (canMove && !isTalking) {
                 _agent.destination = hit.point;
             }
         }

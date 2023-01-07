@@ -508,11 +508,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 5
   m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
@@ -2847,7 +2847,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1251302960}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0.12, y: -1.24, z: -0.45}
+  m_LocalPosition: {x: 0.12, y: 1.24, z: -0.45}
   m_LocalScale: {x: 2.5, y: 2.4999998, z: 2.4999998}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3241,7 +3241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1517960192
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4348,6 +4348,7 @@ GameObject:
   - component: {fileID: 2101256258}
   - component: {fileID: 2101256260}
   - component: {fileID: 2101256259}
+  - component: {fileID: 2101256261}
   m_Layer: 0
   m_Name: Player
   m_TagString: MainCamera
@@ -4371,7 +4372,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2101256252}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.68, y: 0.58, z: -7.76}
+  m_LocalPosition: {x: -9.651, y: -0.09, z: -8.07}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4416,6 +4417,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 0}
   manager: {fileID: 579887403}
+  conversation: {fileID: 0}
   MaxHealth: 100
   CurrentHealth: 0
   MaxStamina: 100
@@ -4426,6 +4428,7 @@ MonoBehaviour:
   canMove: 1
   choseTurn: 0
   inventoryOpen: 1
+  isTalking: 0
 --- !u!136 &2101256258
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4490,3 +4493,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2101256261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2101256252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d075a8c27a7aa774a8fd63eadd399e38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerTextBox: {fileID: 2591846245712716211, guid: 12d913fa626049b4ebf7877cab8d0914, type: 3}
+  player: {fileID: 2101256257}
