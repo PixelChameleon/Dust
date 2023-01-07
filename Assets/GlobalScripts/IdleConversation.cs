@@ -25,7 +25,7 @@ public class IdleConversation : MonoBehaviour {
         _box = Instantiate(TextBoxPrefab, parent);
         var pos = parent.position;
         pos.y = 1.2f;
-        _box.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, 1.2f);
+        _box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1.2f, -4f);
         _box.SetActive(false);
     }
 
