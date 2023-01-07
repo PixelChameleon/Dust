@@ -13,6 +13,7 @@ namespace GlobalScripts {
         public Sprite[] ItemSprites;
 
         private void Start() {
+            SceneManager.LoadScene(2, LoadSceneMode.Additive);
             ItemRegistry.Add(new ItemStack(0, "Key", ItemSprites[0]));
             if (!Application.isEditor) { // Scene loading behaves differently in the editor for some reason...
                 SceneManager.LoadScene(_currentSceneID, LoadSceneMode.Additive);
