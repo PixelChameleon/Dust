@@ -856,7 +856,7 @@ GameObject:
   - component: {fileID: 579887403}
   m_Layer: 0
   m_Name: DustManager
-  m_TagString: Untagged
+  m_TagString: DustManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
