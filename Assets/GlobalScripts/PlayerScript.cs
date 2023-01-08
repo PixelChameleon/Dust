@@ -28,6 +28,7 @@ namespace GlobalScripts {
         private bool isCombatMoving = false;
         public CombatUI CombatUI;
         public CombatManager CombatManager;
+        public InventoryUI InventoryUI;
         public bool canAct = true;
         public bool canMove = true;
         public bool choseTurn = false;
@@ -48,9 +49,19 @@ namespace GlobalScripts {
             conversation = gameObject.GetComponent<PlayerConversation>();
             conversation.player = this;
             AudioListener.volume = PlayerPrefs.GetFloat("volume");
+            _agent.updateUpAxis = false;
+            _agent.updateRotation = false;
         }
     
         private void Update() {
+            if (Input.GetKeyDown(KeyCode.Tab)) {
+                if (inventoryOpen) {
+                    InventoryUI.CloseInventory();
+                    return;
+                }
+                InventoryUI.OpenInventory();
+                return;
+            }
             if (!canAct) {
                 return;
             }
