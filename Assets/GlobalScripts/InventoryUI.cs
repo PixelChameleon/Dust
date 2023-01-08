@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,6 +20,9 @@ namespace GlobalScripts {
         private void Start() {
             foreach (Transform child in gameObject.transform) {
                 Debug.Log(child.name);
+                if (!child.CompareTag("InvSlot")) {
+                    continue;
+                }
                 _buttons.Add(child.gameObject);
             }
             Debug.Log("Buttons: " + _buttons.Count);
@@ -28,8 +32,26 @@ namespace GlobalScripts {
 
         public void refreshInventory() {
             foreach (var button in _buttons) {
+                if (button.GetComponent<InventorySlot>().Item is null) {
+                    button.GetComponent<Image>().sprite = null;
+                    continue;
+                }
                 button.GetComponent<Image>().sprite = button.GetComponent<InventorySlot>().Item.Sprite;
             }
+        }
+
+        public void OpenInventory() {
+            gameObject.SetActive(true);
+            PlayerScript.inventoryOpen = true;
+            refreshInventory();
+        }
+        
+        public void CloseInventory() {
+            if (_follower != null) {
+                return;
+            }
+            gameObject.SetActive(false);
+            PlayerScript.inventoryOpen = false;
         }
 
         private void Update() {
@@ -44,6 +66,7 @@ namespace GlobalScripts {
                 _follower = Instantiate(CursorFollowObjectPrefab, gameObject.transform);
             }
             _follower.GetComponent<Image>().sprite = stack.Sprite;
+            _follower.GetComponentInChildren<TextMeshProUGUI>().text = stack.Name;
             _pickedItem = stack;
         }
 
@@ -60,11 +83,14 @@ namespace GlobalScripts {
             if (slot.Item != null) {
                 Pickup(slot.Item);
                 Debug.Log("Picked up item");
+                slot.Item = null;
+                refreshInventory();
             }
             else if (slot.Item == null && _follower != null) {
                 Debug.Log("Dropped item");
                 slot.Item = _pickedItem;
                 Destroy(_follower);
+                refreshInventory();
             }
         }
     }
