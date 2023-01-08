@@ -16,6 +16,9 @@ namespace GlobalScripts {
         public GameObject CursorFollowObjectPrefab;
         private GameObject _follower;
         
+        private Color _activeColor = new(255, 255, 255, 1);
+        private Color _inactiveColor = new(255, 255, 255, 0.3f);
+        
 
         private void Start() {
             foreach (Transform child in gameObject.transform) {
