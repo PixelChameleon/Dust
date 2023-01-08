@@ -7,7 +7,11 @@ public class AnimationFixer : MonoBehaviour {
     
     private NavMeshAgent _agent;
     void Start() {
-        _agent = GetComponentInParent<NavMeshAgent>();
+        _agent = transform.parent.GetComponent<NavMeshAgent>();
+        if (_agent == null) {
+            Debug.LogError("Parent of " + gameObject.name + " has no NavMeshAgent!");
+            gameObject.SetActive(false);
+        }
     }
     
     void Update() {
