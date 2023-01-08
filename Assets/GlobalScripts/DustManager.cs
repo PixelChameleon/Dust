@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +11,14 @@ namespace GlobalScripts {
         public PlayerScript player;
         public GameObject bullet;
         public Sprite[] ItemSprites;
+        
+        [Serializable]
+        public struct NamedImage {
+            public string name;
+            public Texture2D image;
+        }
+        public NamedImage[] cursors;
+        public GameObject cursorPrefab;
 
         private void Start() {
             
@@ -28,6 +37,16 @@ namespace GlobalScripts {
             SceneManager.LoadScene(id, LoadSceneMode.Additive); // Maybe async loading? although they are pretty small anyways
             _currentSceneID = id;
             Debug.Log("Switched scene to " + _currentSceneID);
+        }
+
+        public Texture2D GetCursorTexture(MouseCursorChange.CursorShape shape) {
+            foreach (var picshape in cursors) {
+                if (picshape.name == shape.ToString()) {
+                    return picshape.image;
+                }
+            }
+
+            return null;
         }
     }
     
