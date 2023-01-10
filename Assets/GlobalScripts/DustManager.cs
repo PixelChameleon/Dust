@@ -10,6 +10,7 @@ namespace GlobalScripts {
         private int _currentSceneID = 2;
         public PlayerScript player;
         public GameObject bullet;
+        public GameObject ClickableObjectTextBox;
         public Sprite[] ItemSprites;
         
         [Serializable]
