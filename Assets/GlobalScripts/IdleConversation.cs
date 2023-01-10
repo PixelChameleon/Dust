@@ -30,6 +30,9 @@ public class IdleConversation : MonoBehaviour {
     }
 
     private void Converse() {
+        if (_box == null) {
+            return;
+        }
         _waitTime++;
         if (_waitTime > DisplayDurationPerMessage) {
             _box.SetActive(false);

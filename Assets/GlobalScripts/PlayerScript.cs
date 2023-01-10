@@ -34,6 +34,7 @@ namespace GlobalScripts {
         public bool choseTurn = false;
         public bool inventoryOpen = false; // TODO
         public bool isTalking = false;
+        
 
         public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
 
@@ -54,14 +55,14 @@ namespace GlobalScripts {
         }
     
         private void Update() {
-            if (Input.GetKeyDown(KeyCode.Tab)) {
+            /*if (Input.GetKeyDown(KeyCode.Tab)) { Permanent inventory for now
                 if (inventoryOpen) {
                     InventoryUI.CloseInventory();
                     return;
                 }
                 InventoryUI.OpenInventory();
                 return;
-            }
+            }*/
             if (!canAct) {
                 return;
             }

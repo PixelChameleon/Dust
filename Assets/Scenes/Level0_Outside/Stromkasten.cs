@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using GlobalScripts;
 using UnityEngine;
 
@@ -66,6 +64,7 @@ public class Stromkasten : MonoBehaviour, IClickableGameObject {
                 Debug.Log("Done");
                 player.canMove = true;
                 parentPopup.SetActive(false);
+                PlayerPrefs.SetInt("Stromkasten", 1);
                 return;
             }
             Debug.Log("Failed last");

@@ -14,6 +14,10 @@ public class MainMenuScript : MonoBehaviour {
     public void Play() {
         SceneManager.LoadScene(1, LoadSceneMode.Single);
     }
+
+    public void ResetGame() {
+        PlayerPrefs.SetInt("Stromkasten", 0);
+    }
     
     public void VolumeChange() {
         GameObject o = EventSystem.current.currentSelectedGameObject;
