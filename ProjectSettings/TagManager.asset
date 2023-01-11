@@ -9,6 +9,9 @@ TagManager:
   - DustManager
   - InvSlot
   - FixedCamera
+  - CableBlue
+  - CableRed
+  - CableGreen
   layers:
   - Default
   - TransparentFX
