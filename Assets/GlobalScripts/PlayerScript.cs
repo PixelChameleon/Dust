@@ -16,7 +16,7 @@ namespace GlobalScripts {
         public Camera camera;
         public DustManager manager;
         public PlayerConversation conversation;
-        private IDictionary<ItemStack, int> _inventory = new Dictionary<ItemStack, int>();
+        public List<ItemStack> Inventory = new();
 
         public int MaxHealth = 100;
         public int CurrentHealth;
@@ -52,6 +52,7 @@ namespace GlobalScripts {
             AudioListener.volume = PlayerPrefs.GetFloat("volume");
             _agent.updateUpAxis = false;
             _agent.updateRotation = false;
+            Cursor.SetCursor(manager.GetCursorTexture(MouseCursorChange.CursorShape.Default), Vector2.zero, CursorMode.ForceSoftware);
         }
     
         private void Update() {
@@ -92,8 +93,10 @@ namespace GlobalScripts {
 
             var hitObject = hit.transform.gameObject;
             if (hitObject.CompareTag("Clickable") && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE && !isTalking) {
-                var clickable = hitObject.GetComponent<IClickableGameObject>();
-                clickable.OnClick(this);
+                var clickable = hitObject.GetComponents<IClickableGameObject>();
+                foreach (var click in clickable) {
+                    click.OnClick(this);
+                }
                 return;
             }
 
@@ -131,37 +134,19 @@ namespace GlobalScripts {
         //
 
         // Check if the player has required amount of an item. See DustManager for item ids.
-        public bool HasItem(int id, int amount) {
-            return _inventory.Any(item => (item.Key.id == id) && item.Value >= amount);
+        public bool HasItem(int id) {
+            return Inventory.Any(item => (item.id == id));
         }
 
         public void AddItem(ItemStack itemStack) {
-            if (_inventory.ContainsKey(itemStack)) {
-                _inventory[itemStack]++;
+            if (HasItem(itemStack.id)) {
                 return;
             }
-            _inventory.Add(itemStack, 1);
-        }
-        
-        public void AddItem(ItemStack itemStack, int amount) {
-            if (_inventory.ContainsKey(itemStack)) {
-                _inventory[itemStack] += amount;
-                return;
-            }
-            _inventory.Add(itemStack, amount);
+            Inventory.Add(itemStack);
         }
 
         public void RemoveItem(ItemStack itemStack) {
-            _inventory.Remove(itemStack);
-        }
-
-        public void RemoveItem(ItemStack itemStack, int amount) {
-            if (!_inventory.ContainsKey(itemStack)) return;
-            var currentAmount = _inventory[itemStack];
-            _inventory[itemStack] = amount - currentAmount;
-            if (_inventory[itemStack] <= 0) {
-                _inventory.Remove(itemStack);
-            }
+            Inventory.Remove(itemStack);
         }
 
         public void Damage(int amount) {

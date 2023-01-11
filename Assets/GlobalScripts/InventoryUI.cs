@@ -29,17 +29,26 @@ namespace GlobalScripts {
                 _buttons.Add(child.gameObject);
             }
             Debug.Log("Buttons: " + _buttons.Count);
-            _buttons[1].GetComponent<InventorySlot>().Item = DustManager.ItemRegistry[0];
             refreshInventory();
         }
 
         public void refreshInventory() {
+            if (PlayerScript.Inventory.Count == 0) {
+                return;
+            }
+            int i = 0;
             foreach (var button in _buttons) {
-                if (button.GetComponent<InventorySlot>().Item is null) {
+                Debug.Log("Player inventory size: " + PlayerScript.Inventory.Count);
+                if (PlayerScript.Inventory[i] == null) {
                     button.GetComponent<Image>().sprite = null;
+                    button.GetComponent<Image>().color = _inactiveColor;
+                    i++;
                     continue;
                 }
+                button.GetComponent<InventorySlot>().Item = PlayerScript.Inventory[i];
                 button.GetComponent<Image>().sprite = button.GetComponent<InventorySlot>().Item.Sprite;
+                button.GetComponent<Image>().color = _activeColor;
+                i++;
             }
         }
 
@@ -73,12 +82,7 @@ namespace GlobalScripts {
             _pickedItem = stack;
         }
 
-        public void OnButtonClick() { 
-            if (!PlayerScript.inventoryOpen) {
-                
-                Debug.Log("Huh");
-                return;
-            }
+        public void OnButtonClick() {
             Debug.Log("Inv click");
             refreshInventory();
             var button = EventSystem.current.currentSelectedGameObject;
@@ -89,11 +93,18 @@ namespace GlobalScripts {
                 slot.Item = null;
                 refreshInventory();
             }
-            else if (slot.Item == null && _follower != null) {
-                Debug.Log("Dropped item");
-                slot.Item = _pickedItem;
-                Destroy(_follower);
-                refreshInventory();
+            else if (_follower != null) {
+                if (slot.Item == null) {
+                    slot.Item = _pickedItem;
+                    Destroy(_follower);
+                    refreshInventory();
+                    Debug.Log("Dropped item");
+                } else if (_pickedItem.CanCombineWith != null && slot.Item == _pickedItem.CanCombineWith) {
+                    slot.Item = _pickedItem.CombinationResult;
+                    Destroy(_follower);
+                    refreshInventory();
+                    Debug.Log("Crafted " + slot.Item.Name);
+                }
             }
         }
     }

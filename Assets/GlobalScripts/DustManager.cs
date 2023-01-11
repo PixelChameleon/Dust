@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,8 @@ namespace GlobalScripts {
         public PlayerScript player;
         public GameObject bullet;
         public GameObject ClickableObjectTextBox;
+        public GameObject interactionHintText;
+        public GameObject interactionHintImage;
         public Sprite[] ItemSprites;
         
         [Serializable]
@@ -24,13 +27,21 @@ namespace GlobalScripts {
         private void Start() {
             
             SceneManager.LoadScene(2, LoadSceneMode.Additive);
-            ItemRegistry.Add(new ItemStack(0, "Key", ItemSprites[0]));
+            ItemRegistry.Add(new ItemStack(0, "TestKey", ItemSprites[0]));
+            ItemRegistry.Add(new ItemStack(1, "Geheimes Dokument", ItemSprites[1]));
+            ItemRegistry.Add(new ItemStack(2, "Schraubenzieher", ItemSprites[2]));
+            Debug.Log("Loaded " + ItemRegistry.Count + " items.");
             if (!Application.isEditor) { // Scene loading behaves differently in the editor for some reason...
                 SceneManager.LoadScene(_currentSceneID, LoadSceneMode.Additive);
             }
             //Debug.LogError("Scenes: " + SceneManager.sceneCount + "/" + SceneManager.sceneCountInBuildSettings);
+            InvokeRepeating(nameof(test), 1, 3);
         }
-        
+
+        private void test() {
+            Debug.Log("Inv: " + ItemRegistry.Count);
+        }
+
 
         // Switches the scene. Scene IDs are set in File -> Build Settings
         public void SwitchScene(int id) {
@@ -38,6 +49,10 @@ namespace GlobalScripts {
             SceneManager.LoadScene(id, LoadSceneMode.Additive); // Maybe async loading? although they are pretty small anyways
             _currentSceneID = id;
             Debug.Log("Switched scene to " + _currentSceneID);
+            
+            // reset cursor hint on level switch
+            interactionHintImage.SetActive(false);
+            interactionHintText.GetComponent<TextMeshProUGUI>().text = "";
         }
 
         public Texture2D GetCursorTexture(MouseCursorChange.CursorShape shape) {
