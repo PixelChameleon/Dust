@@ -7,12 +7,12 @@ namespace GlobalScripts {
 
         public void OnClick(PlayerScript player) {
             DustManager manager = GameObject.FindGameObjectWithTag("DustManager").GetComponent<DustManager>();
-            Debug.Log("Received Item pick click^. Registry size: " + manager.ItemRegistry.Count);
+            Debug.Log("Received Item pick click^. Registry size: " + DustManager.ItemRegistry.Count);
             if (_alreadyCollected) return;
             _alreadyCollected = true;
-            player.AddItem(manager.ItemRegistry[itemID]);
+            player.AddItem(DustManager.ItemRegistry[itemID]);
             player.InventoryUI.refreshInventory();
-            Debug.Log("Picked up " + manager.ItemRegistry[itemID].Name);
+            Debug.Log("Picked up " + DustManager.ItemRegistry[itemID].Name);
         }
     }
 }

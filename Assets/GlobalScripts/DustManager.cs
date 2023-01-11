@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 namespace GlobalScripts {
     public class DustManager : MonoBehaviour {
 
-        public List<ItemStack> ItemRegistry = new();
+        public static readonly List<ItemStack> ItemRegistry = new();
         private int _currentSceneID = 2;
         public PlayerScript player;
         public GameObject bullet;
@@ -15,7 +15,7 @@ namespace GlobalScripts {
         public GameObject interactionHintText;
         public GameObject interactionHintImage;
         public Sprite[] ItemSprites;
-        
+
         [Serializable]
         public struct NamedImage {
             public string name;
@@ -35,16 +35,11 @@ namespace GlobalScripts {
                 SceneManager.LoadScene(_currentSceneID, LoadSceneMode.Additive);
             }
             //Debug.LogError("Scenes: " + SceneManager.sceneCount + "/" + SceneManager.sceneCountInBuildSettings);
-            InvokeRepeating(nameof(test), 1, 3);
         }
-
-        private void test() {
-            Debug.Log("Inv: " + ItemRegistry.Count);
-        }
-
 
         // Switches the scene. Scene IDs are set in File -> Build Settings
         public void SwitchScene(int id) {
+            player.camera.gameObject.SetActive(false);
             SceneManager.UnloadScene(_currentSceneID);
             SceneManager.LoadScene(id, LoadSceneMode.Additive); // Maybe async loading? although they are pretty small anyways
             _currentSceneID = id;
@@ -54,6 +49,7 @@ namespace GlobalScripts {
             interactionHintImage.SetActive(false);
             interactionHintText.GetComponent<TextMeshProUGUI>().text = "";
         }
+        
 
         public Texture2D GetCursorTexture(MouseCursorChange.CursorShape shape) {
             foreach (var picshape in cursors) {

@@ -6,14 +6,15 @@ namespace Scenes.Scene01 {
         public GameObject stromkasten;
         
         public void OnClick(PlayerScript player) {
-            if (!player.HasItem(2)) {
+            if (player.InventoryUI.PickedItem != DustManager.ItemRegistry[2]) {
                 return;
             }
             player.canMove = false;
             stromkasten.SetActive(!stromkasten.activeSelf);
-            Vector3 pos = new(player.transform.position.x, 2, player.transform.position.z);
+            var position = player.camera.gameObject.transform.position;
+            Vector3 pos = new(position.x, 2, position.z);
             pos.z += 4;
-            stromkasten.transform.SetPositionAndRotation(pos, stromkasten.transform.rotation);
+            //stromkasten.transform.SetPositionAndRotation(pos, stromkasten.transform.rotation);
             
         }
 

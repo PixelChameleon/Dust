@@ -8,6 +8,7 @@ TagManager:
   - CanBeDamaged
   - DustManager
   - InvSlot
+  - FixedCamera
   layers:
   - Default
   - TransparentFX

@@ -12,23 +12,21 @@ namespace GlobalScripts {
         public PlayerScript PlayerScript;
         public DustManager DustManager;
         private List<GameObject> _buttons = new();
-        private ItemStack _pickedItem = null;
+        public ItemStack PickedItem = null;
         public GameObject CursorFollowObjectPrefab;
         private GameObject _follower;
         
         private Color _activeColor = new(255, 255, 255, 1);
-        private Color _inactiveColor = new(255, 255, 255, 0.3f);
+        private Color _inactiveColor = new(255, 255, 255, 0.0f);
         
 
         private void Start() {
             foreach (Transform child in gameObject.transform) {
-                Debug.Log(child.name);
                 if (!child.CompareTag("InvSlot")) {
                     continue;
                 }
                 _buttons.Add(child.gameObject);
             }
-            Debug.Log("Buttons: " + _buttons.Count);
             refreshInventory();
         }
 
@@ -38,16 +36,24 @@ namespace GlobalScripts {
             }
             int i = 0;
             foreach (var button in _buttons) {
-                Debug.Log("Player inventory size: " + PlayerScript.Inventory.Count);
-                if (PlayerScript.Inventory[i] == null) {
+                button.GetComponent<InventorySlot>().slotID = i;
+                if (i > PlayerScript.Inventory.Count - 1 || PlayerScript.Inventory[i] == null) {
                     button.GetComponent<Image>().sprite = null;
-                    button.GetComponent<Image>().color = _inactiveColor;
+                    var colorBlock = button.GetComponent<Button>().colors;
+                    colorBlock.normalColor = _inactiveColor;
+                    colorBlock.highlightedColor = _inactiveColor;
+                    colorBlock.pressedColor = _inactiveColor;
+                    button.GetComponent<Button>().colors = colorBlock;
                     i++;
                     continue;
                 }
                 button.GetComponent<InventorySlot>().Item = PlayerScript.Inventory[i];
                 button.GetComponent<Image>().sprite = button.GetComponent<InventorySlot>().Item.Sprite;
-                button.GetComponent<Image>().color = _activeColor;
+                var colorBlock2 = button.GetComponent<Button>().colors;
+                colorBlock2.normalColor = _activeColor;
+                colorBlock2.highlightedColor = _activeColor;
+                colorBlock2.pressedColor = _activeColor;
+                button.GetComponent<Button>().colors = colorBlock2;
                 i++;
             }
         }
@@ -79,7 +85,7 @@ namespace GlobalScripts {
             }
             _follower.GetComponent<Image>().sprite = stack.Sprite;
             _follower.GetComponentInChildren<TextMeshProUGUI>().text = stack.Name;
-            _pickedItem = stack;
+            PickedItem = stack;
         }
 
         public void OnButtonClick() {
@@ -91,18 +97,23 @@ namespace GlobalScripts {
                 Pickup(slot.Item);
                 Debug.Log("Picked up item");
                 slot.Item = null;
+                PlayerScript.Inventory[slot.slotID] = null;
                 refreshInventory();
             }
             else if (_follower != null) {
                 if (slot.Item == null) {
-                    slot.Item = _pickedItem;
+                    slot.Item = PickedItem;
+                    PlayerScript.Inventory[slot.slotID] = slot.Item;
                     Destroy(_follower);
                     refreshInventory();
+                    PickedItem = null;
                     Debug.Log("Dropped item");
-                } else if (_pickedItem.CanCombineWith != null && slot.Item == _pickedItem.CanCombineWith) {
-                    slot.Item = _pickedItem.CombinationResult;
+                } else if (PickedItem.CanCombineWith != null && slot.Item == PickedItem.CanCombineWith) {
+                    slot.Item = PickedItem.CombinationResult;
+                    PlayerScript.Inventory[slot.slotID] = slot.Item;
                     Destroy(_follower);
                     refreshInventory();
+                    PickedItem = null;
                     Debug.Log("Crafted " + slot.Item.Name);
                 }
             }

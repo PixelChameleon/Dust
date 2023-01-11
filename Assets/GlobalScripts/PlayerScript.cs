@@ -10,13 +10,13 @@ using Slider = UnityEngine.UI.Slider;
 namespace GlobalScripts {
     public class PlayerScript : MonoBehaviour, ICombatant {
 
-        private static float MAX_CLICK_DISTANCE = 5.0f;
+        private static float MAX_CLICK_DISTANCE = 3.5f;
         
         private NavMeshAgent _agent;
         public Camera camera;
         public DustManager manager;
         public PlayerConversation conversation;
-        public List<ItemStack> Inventory = new();
+        public List<ItemStack> Inventory = new(new ItemStack[16]);
 
         public int MaxHealth = 100;
         public int CurrentHealth;
@@ -135,14 +135,31 @@ namespace GlobalScripts {
 
         // Check if the player has required amount of an item. See DustManager for item ids.
         public bool HasItem(int id) {
-            return Inventory.Any(item => (item.id == id));
+            foreach (var item in Inventory) {
+                if (item == null) {
+                    continue;
+                }
+                if (item.id == id) {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public void AddItem(ItemStack itemStack) {
             if (HasItem(itemStack.id)) {
                 return;
             }
-            Inventory.Add(itemStack);
+
+            var i = 0;
+            foreach (var slot in Inventory) {
+                if (slot == null) {
+                    Inventory[i] = itemStack;
+                    return;
+                }
+                i++;
+            }
         }
 
         public void RemoveItem(ItemStack itemStack) {
