@@ -108,7 +108,7 @@ namespace GlobalScripts {
             }
 
             var combatant = hitObject.GetComponent<ICombatant>();
-            if (combatant != null && !isTalking) {
+            if (combatant != null && !isTalking && hitObject != gameObject) {
                 CombatManager = new CombatManager(this, hitObject.GetComponent<DustEntity>());
                 inCombat = !inCombat;
                 CombatUI.enabled = inCombat;
