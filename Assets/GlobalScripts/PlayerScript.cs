@@ -34,6 +34,9 @@ namespace GlobalScripts {
         public bool choseTurn = false;
         public bool inventoryOpen = false; // TODO
         public bool isTalking = false;
+
+        public GameObject Companion;
+        public bool CompanionControlMode = false;
         
 
         public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
@@ -64,6 +67,13 @@ namespace GlobalScripts {
                 InventoryUI.OpenInventory();
                 return;
             }*/
+            RaycastHit hit;
+
+            if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100) || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
+            if (CompanionControlMode && Companion != null) {
+                Companion.GetComponent<NavMeshAgent>().destination = hit.point;
+                return;
+            }
             if (!canAct) {
                 return;
             }
@@ -81,9 +91,6 @@ namespace GlobalScripts {
                 CombatUI.Stamina.GetComponent<Slider>().value = CurrentStamina;
             }
             if (!Input.GetMouseButtonDown(0)) return;
-            RaycastHit hit;
-
-            if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100) || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
             if (inCombat) {
                 if (CombatManager.SelectedMove != PlayerMove.Move) return;
                 CombatMove(hit);
