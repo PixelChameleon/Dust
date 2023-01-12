@@ -150,7 +150,7 @@ public class Guard : DustEntity
 
 
     void OnDrawGizmos()
-    { // sieht man nicht du arsch haha
+    { 
         Vector3 startPosition = pathHolder.GetChild(0).position;
         Vector3 prevoiusPosition = startPosition;
 
