@@ -183,8 +183,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Lautst\xE4rke"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
-  m_sharedMaterial: {fileID: 477138389937708468, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -540,15 +540,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4245283, g: 0.4245283, b: 0.4245283, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ba2157da7380f8e44b6c1b5e63487534, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -787,7 +787,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ea45a960e905cdd4c867125079e685ad, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ba2157da7380f8e44b6c1b5e63487534, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -914,15 +914,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ba2157da7380f8e44b6c1b5e63487534, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1075,8 +1075,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: ' Reset Game'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
-  m_sharedMaterial: {fileID: 477138389937708468, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1428,8 +1428,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Spielen
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
-  m_sharedMaterial: {fileID: 477138389937708468, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1563,8 +1563,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Spiel beenden
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
-  m_sharedMaterial: {fileID: 477138389937708468, guid: f696e9a0071605d4abce3214de3fbf48, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

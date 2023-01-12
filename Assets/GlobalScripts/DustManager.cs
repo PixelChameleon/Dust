@@ -40,8 +40,11 @@ namespace GlobalScripts {
         // Switches the scene. Scene IDs are set in File -> Build Settings
         public void SwitchScene(int id) {
             player.camera.gameObject.SetActive(false);
-            SceneManager.UnloadScene(_currentSceneID);
             SceneManager.LoadScene(id, LoadSceneMode.Additive); // Maybe async loading? although they are pretty small anyways
+            if (SceneManager.UnloadScene(_currentSceneID) == false) {
+                Debug.LogError("Failed to unload scene.");
+            }
+            Resources.UnloadUnusedAssets();
             _currentSceneID = id;
             Debug.Log("Switched scene to " + _currentSceneID);
             
