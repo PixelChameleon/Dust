@@ -9,8 +9,9 @@ using Slider = UnityEngine.UI.Slider;
 
 namespace GlobalScripts {
     public class PlayerScript : MonoBehaviour, ICombatant {
-
-        private static float MAX_CLICK_DISTANCE = 3.5f;
+        
+        [Range(0.0f, 10.0f)]
+        public float MAX_CLICK_DISTANCE = 3.5f;
         
         private NavMeshAgent _agent;
         public Camera camera;
@@ -99,7 +100,9 @@ namespace GlobalScripts {
             }
 
             var hitObject = hit.transform.gameObject;
-            if (hitObject.CompareTag("Clickable") && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE && !isTalking) {
+            Vector2 interact2D = new Vector2(hitObject.transform.position.x, hitObject.transform.position.y);
+            Vector2 self2D = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            if (hitObject.CompareTag("Clickable") && Vector2.Distance(interact2D, self2D) <= MAX_CLICK_DISTANCE && !isTalking) {
                 var clickable = hitObject.GetComponents<IClickableGameObject>();
                 foreach (var click in clickable) {
                     click.OnClick(this);
@@ -117,7 +120,7 @@ namespace GlobalScripts {
             }
             
             var conversationHolder = hitObject.GetComponent<PlayerConversationHolder>();
-            if (conversationHolder != null && Vector3.Distance(hitObject.transform.position, this.transform.position) <= MAX_CLICK_DISTANCE) {
+            if (conversationHolder != null && Vector2.Distance(interact2D, self2D) <= MAX_CLICK_DISTANCE) {
                 conversation.ClickNext(conversationHolder);
                 return;
             }
