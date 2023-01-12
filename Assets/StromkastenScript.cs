@@ -10,7 +10,7 @@ public class StromkastenScript : MonoBehaviour {
         var button = EventSystem.current.currentSelectedGameObject;
         
         if (successCounter == 0) {
-            if (button.CompareTag("CableBlue")) {
+            if (button.CompareTag("CableRed")) {
                 successCounter = 1;
                 Debug.Log("First color success.");
                 return;
@@ -19,14 +19,16 @@ public class StromkastenScript : MonoBehaviour {
             // TODO: Kill the player
         }
         if (successCounter == 1) {
-            if (button.CompareTag("CableRed")) {
+            if (button.CompareTag("CableBlue")) {
                 successCounter = 2;
                 Debug.Log("Second color success.");
                 return;
             }
             Debug.Log("Failed second");
+            close();
+            successCounter = 0;
             // TODO: Kill the player
-            
+
         }
         if (successCounter == 2) {
             if (button.CompareTag("CableGreen")) {
@@ -37,6 +39,8 @@ public class StromkastenScript : MonoBehaviour {
                 return;
             }
             Debug.Log("Failed last");
+            close();
+            successCounter = 0;
             // TODO: Kill the player
         }
     }

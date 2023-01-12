@@ -7,7 +7,7 @@ namespace Scenes.Scene01 {
         
         public void OnClick(PlayerScript player) {
             if (player.InventoryUI.PickedItem != DustManager.ItemRegistry[2]) {
-                Debug.Log("Wrong item for interaction.");
+                GetComponent<InvestigateObjectScript>().SpawnBox("Ein Schraubenzieher wäre hier hilfreich...");
                 return;
             }
             player.canMove = false;
