@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using GlobalScripts.combat;
 using GlobalScripts.entity;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using Slider = UnityEngine.UI.Slider;
@@ -30,6 +31,8 @@ namespace GlobalScripts {
         public CombatUI CombatUI;
         public CombatManager CombatManager;
         public InventoryUI InventoryUI;
+        public DeathUI DeathUI;
+        private RespawnPoint _respawnPoint;
         public bool canAct = true;
         public bool canMove = true;
         public bool choseTurn = false;
@@ -187,8 +190,34 @@ namespace GlobalScripts {
             return CurrentHealth;
         }
         
-        public void Die() {
-            // Deaded.
+        public void Die(string deathmessage) {
+            canAct = false;
+            PlayerPrefs.SetInt("deaths", PlayerPrefs.GetInt("stat_deaths", 0) + 1);
+            DeathUI.DeathMenu.gameObject.SetActive(true);
+            DeathUI.Refresh(deathmessage);
+        }
+
+        public void Respawn() {
+            DeathUI.DeathMenu.gameObject.SetActive(false);
+            if (_respawnPoint != null && !_respawnPoint.IsDestroyed()) {
+                transform.position = _respawnPoint.GetLocation();
+            }
+            else {
+                transform.position = new Vector3(0, 0, transform.position.z);
+            }
+            _agent.destination = transform.position;
+            canAct = true;
+        }
+
+        public void CheckNewSpawnPoint(RespawnPoint point) {
+            if (!_respawnPoint.IsDestroyed()) {
+                _respawnPoint = null;
+            }
+            if (_respawnPoint != null && point.respawnPointID <= _respawnPoint.respawnPointID) {
+                return;
+            }
+            Debug.Log("Respawn point set to " + point.respawnPointID);
+            _respawnPoint = point;
         }
         
         public Weapon GetWeapon() {

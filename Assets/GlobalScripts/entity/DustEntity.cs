@@ -107,7 +107,7 @@ namespace GlobalScripts.entity {
             return Health;
         }
 
-        public void Die() {
+        public void Die(string msg) {
             // DIE
         }
 

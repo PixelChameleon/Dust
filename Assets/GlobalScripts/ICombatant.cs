@@ -6,7 +6,7 @@ namespace GlobalScripts {
         public void Damage(int amount);
         public int GetHealth();
 
-        public void Die();
+        public void Die(string deathmessage);
 
         public Weapon GetWeapon();
 
