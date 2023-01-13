@@ -10,6 +10,7 @@ namespace GlobalScripts {
 
         public static readonly List<ItemStack> ItemRegistry = new();
         private int _currentSceneID = 2;
+        public bool[] fixedCamera = new bool[5];
         public PlayerScript player;
         public GameObject bullet;
         public GameObject ClickableObjectTextBox;
@@ -58,7 +59,7 @@ namespace GlobalScripts {
 
         // Switches the scene. Scene IDs are set in File -> Build Settings
         public void SwitchScene(int id) {
-            player.camera.gameObject.SetActive(false);
+            //player.camera.gameObject.SetActive(false);
             SceneManager.UnloadSceneAsync(_currentSceneID);
             SceneManager.LoadScene(id, LoadSceneMode.Additive); // Maybe async loading? although they are pretty small anyways
             //Resources.UnloadUnusedAssets(); Do we need this?

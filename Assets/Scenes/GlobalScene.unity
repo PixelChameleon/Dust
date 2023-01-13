@@ -1234,6 +1234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a88a04f03106c94c9a85066fa079bca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fixedCamera: 0000010000
   player: {fileID: 0}
   bullet: {fileID: 8316437928894606302, guid: f6c2d616e246b124f9cacd9f0c524610, type: 3}
   ClickableObjectTextBox: {fileID: 2591846245712716211, guid: 719955bba7eae4448b0bbe6aa81ac4a3, type: 3}
@@ -3585,7 +3586,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0, g: 0, b: 0, a: 0.5254902}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
