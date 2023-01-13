@@ -5,10 +5,11 @@ using UnityEngine.EventSystems;
 public class StromkastenScript : MonoBehaviour {
     
     private int successCounter = 0;
+    private PlayerScript _player;
 
     public void OnClick() {
         var button = EventSystem.current.currentSelectedGameObject;
-        
+        _player = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayerScript>();
         if (successCounter == 0) {
             if (button.CompareTag("CableRed")) {
                 successCounter = 1;
@@ -16,7 +17,8 @@ public class StromkastenScript : MonoBehaviour {
                 return;
             }
             Debug.Log("Failed first");
-            // TODO: Kill the player
+            close();
+            _player.Die("Du hast einen Stromschlag bekommen. Bzzz bzzz");
         }
         if (successCounter == 1) {
             if (button.CompareTag("CableBlue")) {
@@ -27,7 +29,7 @@ public class StromkastenScript : MonoBehaviour {
             Debug.Log("Failed second");
             close();
             successCounter = 0;
-            // TODO: Kill the player
+            _player.Die("Aua! Stromschläge sind gefährlich.");
 
         }
         if (successCounter == 2) {
@@ -41,7 +43,7 @@ public class StromkastenScript : MonoBehaviour {
             Debug.Log("Failed last");
             close();
             successCounter = 0;
-            // TODO: Kill the player
+            _player.Die("Hochspannung ist tödlich.");
         }
     }
 
