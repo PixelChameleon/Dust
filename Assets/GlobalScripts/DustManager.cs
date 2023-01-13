@@ -29,6 +29,7 @@ namespace GlobalScripts {
         private void Start() {
             
             SceneManager.LoadScene(2, LoadSceneMode.Additive);
+            GameObject.FindGameObjectWithTag("MainCamera").transform.position = new Vector3(0, 0, GameObject.FindGameObjectWithTag("MainCamera").transform.position.z);
             
             ItemRegistry.Add(new ItemStack(0, "Zange", ItemSprites[0]));
             ItemRegistry.Add(new ItemStack(1, "Geheimes Dokument", ItemSprites[1]));
@@ -65,6 +66,8 @@ namespace GlobalScripts {
             //Resources.UnloadUnusedAssets(); Do we need this?
             _currentSceneID = id;
             Debug.Log("Switched scene to " + _currentSceneID);
+            
+            GameObject.FindGameObjectWithTag("MainCamera").transform.position = new Vector3(0, 0, GameObject.FindGameObjectWithTag("MainCamera").transform.position.z);
             
             // reset cursor hint on level switch
             interactionHintImage.SetActive(false);
