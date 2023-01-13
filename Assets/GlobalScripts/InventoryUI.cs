@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GlobalScripts.combat;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -37,6 +38,14 @@ namespace GlobalScripts {
             int i = 0;
             foreach (var button in _buttons) {
                 button.GetComponent<InventorySlot>().slotID = i;
+                if (i == 8) {
+                    if (PlayerScript.Inventory[8] == null) {
+                        PlayerScript.Weapon = null;
+                    }
+                    else if (PlayerScript.Inventory[8] is Weapon) {
+                        PlayerScript.Weapon = (Weapon) button.GetComponent<InventorySlot>().Item;
+                    }
+                }
                 if (i > PlayerScript.Inventory.Count - 1 || PlayerScript.Inventory[i] == null) {
                     button.GetComponent<Image>().sprite = null;
                     var colorBlock = button.GetComponent<Button>().colors;
@@ -89,11 +98,10 @@ namespace GlobalScripts {
         }
 
         public void OnButtonClick() {
-            Debug.Log("Inv click");
             refreshInventory();
             var button = EventSystem.current.currentSelectedGameObject;
             InventorySlot slot = button.GetComponent<InventorySlot>();
-            if (slot.Item != null) {
+            if (slot.Item != null && PickedItem == null) {
                 Pickup(slot.Item);
                 Debug.Log("Picked up item");
                 slot.Item = null;
@@ -101,20 +109,25 @@ namespace GlobalScripts {
                 refreshInventory();
             }
             else if (_follower != null) {
-                if (slot.Item == null) {
-                    slot.Item = PickedItem;
-                    PlayerScript.Inventory[slot.slotID] = slot.Item;
-                    Destroy(_follower);
-                    refreshInventory();
-                    PickedItem = null;
-                    Debug.Log("Dropped item");
-                } else if (PickedItem.CanCombineWith != null && slot.Item == PickedItem.CanCombineWith) {
+                if (slot.Item != null && PickedItem.CanCombineWith != null && slot.Item == PickedItem.CanCombineWith) {
                     slot.Item = PickedItem.CombinationResult;
                     PlayerScript.Inventory[slot.slotID] = slot.Item;
                     Destroy(_follower);
                     refreshInventory();
                     PickedItem = null;
                     Debug.Log("Crafted " + slot.Item.Name);
+                    return;
+                }
+                if (slot.Item == null) {
+                    if (slot.slotID == 8 && PickedItem is not Weapon) { // Only allow weapons in slot 8
+                        return;
+                    }
+                    slot.Item = PickedItem;
+                    PlayerScript.Inventory[slot.slotID] = slot.Item;
+                    Destroy(_follower);
+                    refreshInventory();
+                    PickedItem = null;
+                    Debug.Log("Dropped item");
                 }
             }
         }

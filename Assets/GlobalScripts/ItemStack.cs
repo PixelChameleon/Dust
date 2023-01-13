@@ -15,5 +15,6 @@ namespace GlobalScripts {
             this.Name = name;
             this.Sprite = sprite;
         }
+        
     }
 }
