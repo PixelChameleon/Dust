@@ -16,16 +16,22 @@ namespace GlobalScripts {
         public string hintText = "";
 
         private DustManager _manager;
+        private PlayerScript _player;
 
 
         private void Start() {
             _manager = GameObject.FindGameObjectWithTag("DustManager").GetComponent<DustManager>();
+            _player = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayerScript>();
         }
 
         void OnMouseEnter() {
             Cursor.SetCursor(_manager.GetCursorTexture(cursor), Vector2.zero, CursorMode.ForceSoftware);
             if (hintText == "") return;
-            _manager.interactionHintText.GetComponent<TextMeshProUGUI>().text = hintText;
+            var additionalText = "";
+            if (Vector2.Distance(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), new Vector2(_player.gameObject.transform.position.x, _player.gameObject.transform.position.y)) > _player.MAX_CLICK_DISTANCE) {
+                additionalText = " (Zu weit entfernt)";
+            }
+            _manager.interactionHintText.GetComponent<TextMeshProUGUI>().text = hintText + additionalText;
             _manager.interactionHintImage.GetComponent<Image>().sprite = Sprite.Create(_manager.GetCursorTexture(cursor), Rect.MinMaxRect(0, 0, 32, 32), Vector2.zero);
             _manager.interactionHintImage.SetActive(true);
         }

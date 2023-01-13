@@ -38,9 +38,9 @@ namespace GlobalScripts {
 
         public GameObject Companion;
         public bool CompanionControlMode = false;
-        
 
-        public Weapon Weapon = new("Pistole", 1, 5, 3, 0.2f, 4.0f);
+
+        public Weapon Weapon;
 
         private void Start() {
             _agent = GetComponent<NavMeshAgent>();
@@ -170,6 +170,7 @@ namespace GlobalScripts {
                 }
                 i++;
             }
+            InventoryUI.refreshInventory();
         }
 
         public void RemoveItem(ItemStack itemStack) {

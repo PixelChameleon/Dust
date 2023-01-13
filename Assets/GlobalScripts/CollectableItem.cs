@@ -13,6 +13,10 @@ namespace GlobalScripts {
             player.AddItem(DustManager.ItemRegistry[itemID]);
             player.InventoryUI.refreshInventory();
             Debug.Log("Picked up " + DustManager.ItemRegistry[itemID].Name);
+            var popupscript = gameObject.GetComponent<InvestigateObjectScript>();
+            if (popupscript != null) {
+                popupscript.SpawnBox(DustManager.ItemRegistry[itemID].Name + " aufgenommen.");
+            }
         }
     }
 }
