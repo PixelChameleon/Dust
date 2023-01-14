@@ -32,7 +32,7 @@ public class PlayerConversation : MonoBehaviour {
             return;
         }
 
-        if (_currentHolder == null) {
+        if (_currentHolder == null && (!holder.hasTalkedToPlayer && !holder.canTalkAgain)) {
             _currentHolder = holder;
             Debug.Log("Started conversation with " + _currentHolder.gameObject.name);
             player.isTalking = true;
@@ -46,6 +46,7 @@ public class PlayerConversation : MonoBehaviour {
             _currentHolder.Box.SetActive(false);
             _playerBox.SetActive(false);
             _currentHolder.Reset();
+            _currentHolder.hasTalkedToPlayer = true;
             Debug.Log("Finished conversation with " + _currentHolder.gameObject.name);
             _currentHolder = null;
             return;

@@ -7,9 +7,13 @@ public class PlayerConversationHolder : MonoBehaviour {
     public string[] PlayerReplies;
     public GameObject NPCTextBox;
     public int WaitTimeBetweenMessages;
+    [Range(-4f, 4f)]
+    public float textOffset = 1.5f;
     
     private int _playerMsgID;
     private int _npcMsgID;
+    public bool hasTalkedToPlayer = false;
+    public bool canTalkAgain = false;
 
     public GameObject Box;
     void Start() {
@@ -19,8 +23,8 @@ public class PlayerConversationHolder : MonoBehaviour {
         var parent = gameObject.transform;
         Box = Instantiate(NPCTextBox, parent);
         var pos = parent.position;
-        pos.y = 1.5f;
-        Box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 2f, -3f);
+        pos.y = textOffset;
+        Box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, textOffset, -3f);
         Box.SetActive(false);
     }
 
