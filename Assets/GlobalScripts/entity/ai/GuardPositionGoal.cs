@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace GlobalScripts.entity.ai {
     public class GuardPositionGoal : AbstractAIGoal {
@@ -25,12 +28,19 @@ namespace GlobalScripts.entity.ai {
                 return;
             }
 
-            Vector3 target;
-            target.x = +Random.Range(-1.5f, 1.5f);
-            target.z = +Random.Range(-1.5f, 1.5f);
-            target.y = pos.y;
-            Debug.Log("Moving to " + target);
-            Agent.destination = target;
+            for (var i = 0; i < 16; i++) {
+                Random.InitState(DateTime.Now.Millisecond);
+                Vector3 target = new() {
+                    x = pos.x + Random.Range(-3f, 3f),
+                    z = pos.z + Random.Range(-3f, 3f),
+                    y = pos.y
+                };
+                NavMeshPath navMeshPath = new NavMeshPath();
+                if (Agent.CalculatePath(target, navMeshPath) && navMeshPath.status == NavMeshPathStatus.PathComplete || navMeshPath.status == NavMeshPathStatus.PathPartial) {
+                    Agent.destination = target;
+                    break;
+                }
+            }
         }
 
         public override void OnStop() {

@@ -16,6 +16,11 @@ public class AnimationFixer : MonoBehaviour {
     
     void Update() {
         var target = _agent.destination;
+        if (!_agent.hasPath) {
+            GetComponent<Animator>().speed = 0;
+            return;
+        }
+        GetComponent<Animator>().speed = 1;
         if (target.x < transform.parent.position.x) {
             GetComponent<Animator>().SetFloat("Horizontal", -1);
         }
