@@ -1133,7 +1133,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.33
   m_Depth: 10
   m_CullingMask:
     serializedVersion: 2
@@ -4185,6 +4185,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1251302962}
   - component: {fileID: 1251302961}
+  - component: {fileID: 1251302964}
+  - component: {fileID: 1251302963}
   m_Layer: 9
   m_Name: Jack_Side_running_animation_3
   m_TagString: Untagged
@@ -4259,6 +4261,33 @@ Transform:
   m_Father: {fileID: 2101256255}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!111 &1251302963
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251302960}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 0}
+  m_Animations: []
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
+--- !u!114 &1251302964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251302960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e01da7ea70d1eb746bdd000bcffd6008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1278922699
 GameObject:
   m_ObjectHideFlags: 0
@@ -6959,7 +6988,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbacacff091c85f4880ea4ec7c6a4d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MAX_CLICK_DISTANCE: 3.5
+  MAX_CLICK_DISTANCE: 2
   camera: {fileID: 0}
   manager: {fileID: 579887403}
   conversation: {fileID: 0}

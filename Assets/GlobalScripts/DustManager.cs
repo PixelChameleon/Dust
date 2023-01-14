@@ -42,6 +42,7 @@ namespace GlobalScripts {
             ItemRegistry.Add(new Weapon(8, "BoomBoom-2 Shotgun", ItemSprites[8], 1, 20, 2, 0.5f, 2.0f));
             ItemRegistry.Add(new Weapon(9, "BzzzBzzz-42 Laserpistole", ItemSprites[9], 1, 10, 7, 0.2f, 7.0f));
             ItemRegistry.Add(new Weapon(10, "BrrrBrrr-64 Maschinengewehr", ItemSprites[10], 3, 5, 5, 0.3f, 4.0f));
+            ItemRegistry.Add(new ItemStack(11, "Elysium-Erz", ItemSprites[11]));
             Debug.Log("Loaded " + ItemRegistry.Count + " items.");
 
             ItemRegistry[3].CanCombineWith = ItemRegistry[4]; // Körper + Beine

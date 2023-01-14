@@ -169,3 +169,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   pathfindingCooldown: 2
+  AIEnabled: 1
+  textBoxPrefab: {fileID: 2591846245712716211, guid: d31497305608aef4e881315f91372dc0, type: 3}
