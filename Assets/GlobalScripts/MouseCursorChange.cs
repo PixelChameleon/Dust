@@ -7,6 +7,7 @@ namespace GlobalScripts {
     public class MouseCursorChange : MonoBehaviour {
         public enum CursorShape {
             Interact,
+            InteractGreen,
             Attack,
             Default,
             Talk
@@ -25,14 +26,20 @@ namespace GlobalScripts {
         }
 
         void OnMouseEnter() {
-            Cursor.SetCursor(_manager.GetCursorTexture(cursor), Vector2.zero, CursorMode.ForceSoftware);
-            if (hintText == "") return;
             var additionalText = "";
-            if (Vector2.Distance(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), new Vector2(_player.gameObject.transform.position.x, _player.gameObject.transform.position.y)) > _player.MAX_CLICK_DISTANCE) {
+            var shape = cursor;
+            var isToFar = Vector2.Distance(new Vector2(gameObject.transform.position.x, gameObject.transform.position.y), new Vector2(_player.gameObject.transform.position.x, _player.gameObject.transform.position.y)) > _player.MAX_CLICK_DISTANCE;
+            if (isToFar) {
                 additionalText = " (Zu weit entfernt)";
             }
+            if (shape == CursorShape.Interact && !isToFar) {
+                shape = CursorShape.InteractGreen;
+            }
+            var texture2D = _manager.GetCursorTexture(shape);
+            Cursor.SetCursor(texture2D, Vector2.zero, CursorMode.ForceSoftware);
+            if (hintText == "") return;
             _manager.interactionHintText.GetComponent<TextMeshProUGUI>().text = hintText + additionalText;
-            _manager.interactionHintImage.GetComponent<Image>().sprite = Sprite.Create(_manager.GetCursorTexture(cursor), Rect.MinMaxRect(0, 0, 32, 32), Vector2.zero);
+            _manager.interactionHintImage.GetComponent<Image>().sprite = Sprite.Create(texture2D, Rect.MinMaxRect(0, 0, 32, 32), Vector2.zero);
             _manager.interactionHintImage.SetActive(true);
         }
 
