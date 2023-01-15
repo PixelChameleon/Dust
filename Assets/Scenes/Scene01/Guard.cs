@@ -9,7 +9,7 @@ using GlobalScripts;
 public class Guard : DustEntity
 {
     public float speed = 3;
-    public float waitTime = 2f;
+    public float waitTime = 0f;
     public float turnspeed = 90;
 
     public Light spotlight;
@@ -21,8 +21,7 @@ public class Guard : DustEntity
     PlayerScript player;
     Color orginialSpotlightColour;
 
-    void Start()
-    {
+    void Start() {
         base.Start();
         Weapon = DustManager.ItemRegistry[10] as Weapon;
         //IdleAIGoals.Add(1, new FollowPathGoal(this));
@@ -39,46 +38,38 @@ public class Guard : DustEntity
         orginialSpotlightColour = spotlight.color;
 
         Vector3[] waypoints = new Vector3[pathHolder.childCount];
-        for (int i = 0; i < waypoints.Length; i++)
-        {
+        for (int i = 0; i < waypoints.Length; i++) {
             waypoints[i] = pathHolder.GetChild(i).position;
             waypoints[i] = new Vector3(waypoints[i].x, transform.position.y, waypoints[i].z);
         }
 
         StartCoroutine(FollowPath(waypoints));
+        WeaponAttachPoint.GetComponent<SpriteRenderer>().sprite = Weapon.Sprite;
     }
 
-    void Update()
-    {
+    void Update() {
         base.Update();
 
-        if (CanSeePlayer())
-        {
+        if (CanSeePlayer()) {
 
             spotlight.color = Color.red;
-            if (inCombat)
-            {
+            if (inCombat) {
                 spotlight.enabled = false;
-
             }
         }
-        else
-        {
+        else {
             spotlight.color = orginialSpotlightColour;
         }
     }
 
-    bool CanSeePlayer()
-    {
-        if(inCombat)
-        {
+    bool CanSeePlayer() {
+        if(inCombat) {
             return false;
         }
-        if( Vector3.Distance(transform.position, player.transform.position) < viewDistance)
-        {
+        if( Vector3.Distance(transform.position, player.transform.position) < viewDistance) {
             Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-            if(angleBetweenGuardAndPlayer < viewAngle /2f)
+            if(angleBetweenGuardAndPlayer < viewAngle / 2f)
             {
                 if(!Physics.Linecast(transform.position,player.transform.position,viewMask))
                 {
@@ -87,49 +78,37 @@ public class Guard : DustEntity
                 }
             }
         }
-
-        
         return false;
-
     }
 
 
-    IEnumerator FollowPath(Vector3[] waypoints)
-    {
+    IEnumerator FollowPath(Vector3[] waypoints) {
        
         // FollowPath and repeat
         transform.position = waypoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointIndex];
-        transform.LookAt(targetWaypoint);
+        //transform.LookAt(targetWaypoint); - breaks animation anyways
 
-        while (true)
-        {
-            if (inCombat)
-            {
+        while (true) {
+            if (inCombat) {
                 break;            
             }
             // Movement
             transform.position = Vector3.MoveTowards(transform.position, targetWaypoint, speed * Time.deltaTime);
-            if (transform.position == targetWaypoint)
-            { // return to 0
+            Vector2 selfPos2D = new Vector2(transform.position.x, transform.position.z);
+            Vector2 targetPos2D = new Vector2(targetWaypoint.x, targetWaypoint.z);
+            if (Vector2.Distance(selfPos2D, targetPos2D) < 1.0f) { // return to 0
                 targetWaypointIndex = (targetWaypointIndex + 1) % waypoints.Length;
                 targetWaypoint = waypoints[targetWaypointIndex];
                 yield return new WaitForSeconds(waitTime);
-                yield return StartCoroutine(TurnToFace(targetWaypoint));
-
-
-
+                //yield return StartCoroutine(TurnToFace(targetWaypoint));
             }
-
             yield return null;
         }
-
-
     }
 
-    IEnumerator TurnToFace(Vector3 lookTarget)
-    {
+    IEnumerator TurnToFace(Vector3 lookTarget) {
        
         // Calculate the angle to face "LookTarget"
 
@@ -137,29 +116,23 @@ public class Guard : DustEntity
         float targetAngle = 90 - Mathf.Atan2(dirToLookTarget.z, dirToLookTarget.x) * Mathf.Rad2Deg;
 
         // Angle always positive (absolute)
-        while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) >0.05f )
-        {
+        while (Mathf.Abs(Mathf.DeltaAngle(transform.eulerAngles.y, targetAngle)) >0.05f ) {
             float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, turnspeed * Time.deltaTime);
             transform.eulerAngles = Vector3.up * angle;
             yield return null;
         }
-
-
     }
 
 
 
-    void OnDrawGizmos()
-    { 
+    void OnDrawGizmos() { 
         Vector3 startPosition = pathHolder.GetChild(0).position;
         Vector3 prevoiusPosition = startPosition;
 
-        foreach (Transform waypoint in pathHolder)
-        {
+        foreach (Transform waypoint in pathHolder) {
             Gizmos.DrawSphere(waypoint.position, .3f);
             Gizmos.DrawLine(prevoiusPosition, waypoint.position);
             prevoiusPosition = waypoint.position;
-
         }
         Gizmos.DrawLine(prevoiusPosition, startPosition);
 

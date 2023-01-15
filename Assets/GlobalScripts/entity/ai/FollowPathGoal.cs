@@ -23,10 +23,10 @@ namespace GlobalScripts.entity.ai {
 
         public override void OnStart() {
             //transform = Entity.transform; - Crashed den Editor. Sehr spaßig.
-            waypoints = new Vector3[Entity.pathHolder.childCount];
+            waypoints = new Vector3[Entity.dustEntityPathHolder.childCount];
             for (int i = 0; i < waypoints.Length; i++)
             {
-                waypoints[i] = Entity.pathHolder.GetChild(i).position;
+                waypoints[i] = Entity.dustEntityPathHolder.GetChild(i).position;
                 waypoints[i] = new Vector3(waypoints[i].x, Entity.transform.position.y, waypoints[i].z);
             }
             
@@ -72,10 +72,10 @@ namespace GlobalScripts.entity.ai {
 
         // Wird nicht angezeigt da keine MonoBehaviour - ka wie wichtig wir das finden
         void OnDrawGizmos() { // sieht man nicht du arsch haha
-                Vector3 startPosition = Entity.pathHolder.GetChild(0).position;
+                Vector3 startPosition = Entity.dustEntityPathHolder.GetChild(0).position;
                 Vector3 prevoiusPosition = startPosition;
         
-                foreach (Transform waypoint in Entity.pathHolder)
+                foreach (Transform waypoint in Entity.dustEntityPathHolder)
                 {
                     Gizmos.DrawSphere(waypoint.position, .3f);
                     Gizmos.DrawLine(prevoiusPosition, waypoint.position);

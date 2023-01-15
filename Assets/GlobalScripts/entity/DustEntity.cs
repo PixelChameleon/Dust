@@ -15,8 +15,9 @@ namespace GlobalScripts.entity {
         private int _currentGoalPrio = 0;
         private AbstractAIGoal _currentIdleGoal;
         public NavMeshAgent Agent;
+        public GameObject WeaponAttachPoint;
 
-        public Transform pathHolder;
+        public Transform dustEntityPathHolder;
 
         public int Health = 0;
         public int MaxHealth = 100;

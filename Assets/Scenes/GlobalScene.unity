@@ -4186,7 +4186,7 @@ GameObject:
   - component: {fileID: 1251302962}
   - component: {fileID: 1251302961}
   - component: {fileID: 1251302964}
-  - component: {fileID: 1251302963}
+  - component: {fileID: 1251302965}
   m_Layer: 9
   m_Name: Jack_Side_running_animation_3
   m_TagString: Untagged
@@ -4261,21 +4261,6 @@ Transform:
   m_Father: {fileID: 2101256255}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!111 &1251302963
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1251302960}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &1251302964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4288,6 +4273,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e01da7ea70d1eb746bdd000bcffd6008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1251302965
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1251302960}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1278922699
 GameObject:
   m_ObjectHideFlags: 0
