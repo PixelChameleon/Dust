@@ -27,7 +27,7 @@ namespace GlobalScripts {
 
         public List<LastCombatAction> LastCombatActions = new();
         public bool inCombat = false;
-        private bool isCombatMoving = false;
+        public bool isCombatMoving = false;
         public CombatUI CombatUI;
         public CombatManager CombatManager;
         public InventoryUI InventoryUI;
@@ -57,12 +57,16 @@ namespace GlobalScripts {
             LastCombatActions.Add(new LastCombatAction(this, PlayerMove.Move, gameObject.transform.position, gameObject.transform.position));
             conversation = gameObject.GetComponent<PlayerConversation>();
             conversation.player = this;
-            AudioListener.volume = PlayerPrefs.GetFloat("volume");
+            AudioListener.volume = PlayerPrefs.GetFloat("volume", 1.0f);
             _agent.updateUpAxis = false;
             _agent.updateRotation = false;
             Cursor.SetCursor(manager.GetCursorTexture(MouseCursorChange.CursorShape.Default), Vector2.zero, CursorMode.ForceSoftware);
         }
-    
+
+        public void PlayGunshot() {
+            GetComponent<AudioSource>().Play();
+        }
+
         private void Update() {
             /*if (Input.GetKeyDown(KeyCode.Tab)) { Permanent inventory for now
                 if (inventoryOpen) {
@@ -186,6 +190,16 @@ namespace GlobalScripts {
             CurrentHealth = Math.Max(0, CurrentHealth - amount);
             Debug.Log(gameObject.name + " took " + amount + " damage. Health: " + CurrentHealth);
             CombatManager.UpdateHealth();
+            if (CurrentHealth <= 0) {
+                var player = CombatManager.Player;
+                CurrentHealth = MaxHealth;
+                CurrentStamina = player.MaxStamina;
+                canAct = true;
+                inCombat = false;
+                isCombatMoving = false;
+                CombatUI.gameObject.SetActive(false);
+                Die("Du wurdest tödlich von Kugeln getroffen.");    
+            }
         }
 
         public int GetHealth() {
@@ -213,6 +227,13 @@ namespace GlobalScripts {
             canAct = true;
             inCombat = false;
             isCombatMoving = false;
+            if (CombatManager != null) {
+                CombatManager.Enemy.inCombat = false;
+                CombatManager.Enemy.isBusy = false;
+                if (CombatManager.Enemy is Guard guard) {
+                    guard.Triangle.SetActive(true);
+                }
+            }
         }
 
         public void CheckNewSpawnPoint(RespawnPoint point) {

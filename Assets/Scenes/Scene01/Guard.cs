@@ -17,6 +17,7 @@ public class Guard : DustEntity
     //float viewAngle;
 
     public Transform pathHolder;
+    public GameObject Triangle;
     PlayerScript player;
     Color orginialSpotlightColour;
 
@@ -26,8 +27,8 @@ public class Guard : DustEntity
         //IdleAIGoals.Add(1, new FollowPathGoal(this));
         CombatAIGoals.Add(new CombatHideGoal(this));
         CombatAIGoals.Add(new CombatReloadGoal(this));
-        CombatAIGoals.Add(new CombatShootGoal(this));
         CombatAIGoals.Add(new CombatGetInShootingRangeGoal(this));
+        CombatAIGoals.Add(new CombatShootGoal(this));
 
 
         const string Tag = "MainCamera";
@@ -51,15 +52,15 @@ public class Guard : DustEntity
     }
 
     bool CanSeePlayer() {
-        if(inCombat) {
+        if(inCombat || player.inCombat) {
             return false;
         }   
         if( Vector3.Distance(transform.position, player.transform.position) < viewDistance) {
             Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-            Debug.Log("Angle: " + angleBetweenGuardAndPlayer);
             if(angleBetweenGuardAndPlayer < 30.0f) {
                 new CombatManager(player, this);
+                Triangle.SetActive(false);
                 return true;
             }
         }

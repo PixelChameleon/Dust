@@ -20,12 +20,12 @@ TagManager:
   - Water
   - UI
   - NPC
-  - Colission
+  - Collission
   - Obstacle
   - Player
   - Companion
-  - 
-  - 
+  - Bullets
+  - CollissionFloor
   - 
   - 
   - 

@@ -13,7 +13,9 @@ namespace GlobalScripts.entity.ai {
         public override bool Check(LastCombatAction action) {
             _playerPos = action.Player.transform.position;
             float distance = Vector3.Distance(Entity.transform.position, _playerPos);
-            return distance > Entity.Weapon.IdealRange;
+            Random.InitState(DateTime.Now.Millisecond);
+            var i = Random.Range(0, 2);
+            return distance > Entity.Weapon.IdealRange || (i == 1 && action.Move == PlayerMove.Attack);
         }
 
         public override bool Run() {

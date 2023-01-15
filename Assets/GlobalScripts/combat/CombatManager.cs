@@ -71,10 +71,13 @@ namespace GlobalScripts.combat {
             }
             var shooterPos = shooter.GetGameObject().transform.position;
             var targetPos = target.GetGameObject().transform.position;
+            shooterPos.y = 0f;
             float distance =  Vector3.Distance(shooterPos, targetPos);
             Vector3 direction = targetPos - shooterPos;
+            direction.y = 0;
             direction = direction.normalized;
-            var spawnPos = shooterPos + (direction.normalized * 2);
+            var spawnPos = shooterPos + (direction.normalized * 1.2f);
+            Debug.Log("Spawn: " + spawnPos);
             var shooterWeapon = shooter.GetWeapon();
             
             //if (!Physics.Linecast(shooterPos, targetPos)) return ; // Wollen wir schießen erlauben auch wenn Ziel nicht sichtbar ist?
@@ -82,25 +85,36 @@ namespace GlobalScripts.combat {
             float offset = 0f;
             var inRange = shooterWeapon.IdealRange < distance;
             if (!inRange) {
-                offset += 1;
+                offset += 0.33f;
             }
-            Debug.Log("Shooting at " + targetPos + " using direction " + direction);
-            for (var i = 0; i < shooterWeapon.Bullets; i++) {
-                offset += Random.Range(-shooterWeapon.Accuracy, shooterWeapon.Accuracy);
-                direction.x += offset;
-                direction.y += offset;
-                direction.z += offset;
-                spawnPos.y += 0.2f; // Move up so they don't collide with the floor
-                var bullet = MonoBehaviour.Instantiate(Player.manager.bullet, spawnPos, shooter.GetGameObject().transform.rotation);
-                bullet.GetComponent<BulletScript>().damage = shooterWeapon.DamagePerBullet;
-                bullet.GetComponent<Rigidbody>().AddRelativeForce(direction * 1000);
+            Debug.Log("Shooting at " + targetPos + " using direction " + direction + " from " + spawnPos);
+            offset += Random.Range(-shooterWeapon.Accuracy, shooterWeapon.Accuracy);
+            shooterWeapon.TurnsUsed++;
+            UpdateAmmo();
+            var bullet = MonoBehaviour.Instantiate(Player.manager.bullet, spawnPos, Quaternion.identity);
+            bullet.GetComponent<BulletScript>().target = targetPos;
+            //bullet.GetComponent<Rigidbody>().AddRelativeForce(direction * 100);
+            if (!Physics.Linecast(shooterPos, targetPos, bullet.GetComponent<BulletScript>().shooterMask)) {
+                target.Damage(shooterWeapon.DamagePerBullet);
             }
+            if (shooter == Player) {
+                Player.LastCombatActions.Add(new LastCombatAction((PlayerScript) shooter, PlayerMove.Attack, shooterPos, targetPos));
+            }
+            Player.PlayGunshot();
+            /*direction.x += offset;
+            direction.y = 0;
+            direction.z += offset;
+            var bullet = MonoBehaviour.Instantiate(Player.manager.bullet, spawnPos, Quaternion.identity);
+            bullet.GetComponent<BulletScript>().damage = shooterWeapon.DamagePerBullet;
+            bullet.GetComponent<BulletScript>().shooter = shooter;
+            bullet.GetComponent<Rigidbody>().AddRelativeForce(direction * 1000);
+        
             shooterWeapon.TurnsUsed++;
             UpdateAmmo();
             
             if (shooter == Player) {
                 Player.LastCombatActions.Add(new LastCombatAction((PlayerScript) shooter, PlayerMove.Attack, shooterPos, targetPos));
-            }
+            }*/
         }
 
         private void PromptPlayer() {

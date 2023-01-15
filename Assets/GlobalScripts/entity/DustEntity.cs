@@ -101,7 +101,18 @@ namespace GlobalScripts.entity {
         public void Damage(int amount) {
             Health = Math.Max(0, Health - amount);
             Debug.Log(gameObject.name + " took " + amount + " damage. Health: " + Health);
-            CombatManager.UpdateHealth();
+            CombatManager?.UpdateHealth();
+
+            if (Health <= 0) {
+                var player = CombatManager.Player;
+                player.CurrentHealth = MaxHealth;
+                player.CurrentStamina = player.MaxStamina;
+                player.canAct = true;
+                player.inCombat = false;
+                player.isCombatMoving = false;
+                player.CombatUI.gameObject.SetActive(false);
+                Die("");    
+            }
         }
 
         public int GetHealth() {
