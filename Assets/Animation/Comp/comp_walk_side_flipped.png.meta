@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 18d30be47143db34599b752ab7aac1d5
+guid: 7553402d39a13b64da40d8eccb041211
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -117,12 +117,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: comp_walk_back_0
+      name: comp_walk_side_flipped_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 6
         y: 0
-        width: 7
+        width: 6
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -131,19 +131,61 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e7d04ac8d647f274f8ad12c9e9d53a1f
-      internalID: 289038366
+      spriteID: 83f70e8ea4351fb458e91bbcf49f7ade
+      internalID: 1108536812
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comp_walk_back_1
+      name: comp_walk_side_flipped_1
       rect:
         serializedVersion: 2
-        x: 20
+        x: 22
         y: 0
-        width: 7
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbe2d232bb66fda429c8eb6e2579c4d4
+      internalID: 2144760791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: comp_walk_side_flipped_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 0
+        width: 6
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa70ad4538c764048a09ea3fe8bff3ce
+      internalID: 1481054415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: comp_walk_side_flipped_3
+      rect:
+        serializedVersion: 2
+        x: 54
+        y: 0
+        width: 6
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -152,19 +194,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 476b219089175dc4a9ec27a5d1384785
-      internalID: -1592851773
+      spriteID: f2c42bc71c699a649bdb5f596ae1830a
+      internalID: 776942849
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comp_walk_back_2
+      name: comp_walk_side_flipped_4
       rect:
         serializedVersion: 2
-        x: 36
+        x: 70
         y: 0
-        width: 7
+        width: 6
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -173,19 +215,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 540661554b9dc014fbe99093e35b7503
-      internalID: -2107034488
+      spriteID: 00fa3ed926eb8fb408923793ef5e9c18
+      internalID: -1400141876
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: comp_walk_back_3
+      name: comp_walk_side_flipped_5
       rect:
         serializedVersion: 2
-        x: 52
+        x: 86
         y: 0
-        width: 7
+        width: 6
         height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -194,50 +236,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f1b5db699e7c6634a8fbed079bbd4fd3
-      internalID: -1140866719
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: comp_walk_back_4
-      rect:
-        serializedVersion: 2
-        x: 68
-        y: 0
-        width: 7
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f93d33a884c23e84d99be1c0a8691e71
-      internalID: -1824809328
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: comp_walk_back_5
-      rect:
-        serializedVersion: 2
-        x: 84
-        y: 0
-        width: 7
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cea8104eaab31b34fbdc4d570e71aebb
-      internalID: -1693939955
+      spriteID: dfba434f8ccf129438c043b8c1bd7092
+      internalID: 383058906
       vertices: []
       indices: 
       edges: []
@@ -253,12 +253,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      comp_walk_back_3: -1140866719
-      comp_walk_back_0: 289038366
-      comp_walk_back_5: -1693939955
-      comp_walk_back_4: -1824809328
-      comp_walk_back_2: -2107034488
-      comp_walk_back_1: -1592851773
+      comp_walk_side_flipped_4: -1400141876
+      comp_walk_side_flipped_5: 383058906
+      comp_walk_side_flipped_1: 2144760791
+      comp_walk_side_flipped_0: 1108536812
+      comp_walk_side_flipped_2: 1481054415
+      comp_walk_side_flipped_3: 776942849
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
