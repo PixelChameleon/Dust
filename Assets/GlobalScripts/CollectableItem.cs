@@ -3,6 +3,7 @@
 namespace GlobalScripts {
     public class CollectableItem : MonoBehaviour, IClickableGameObject {
         private bool _alreadyCollected;
+        public GameObject visibleSprite;
         public int itemID;
 
         public void OnClick(PlayerScript player) {
@@ -16,6 +17,10 @@ namespace GlobalScripts {
             var popupscript = gameObject.GetComponent<InvestigateObjectScript>();
             if (popupscript != null) {
                 popupscript.SpawnBox(DustManager.ItemRegistry[itemID].Name + " aufgenommen.");
+            }
+
+            if (visibleSprite != null) {
+                visibleSprite.SetActive(false);
             }
         }
     }
