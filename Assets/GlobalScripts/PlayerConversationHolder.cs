@@ -24,7 +24,7 @@ public class PlayerConversationHolder : MonoBehaviour {
         Box = Instantiate(NPCTextBox, parent);
         var pos = parent.position;
         pos.y = textOffset;
-        Box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, textOffset, -3f);
+        Box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, textOffset, -2f);
         Box.SetActive(false);
     }
 

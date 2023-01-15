@@ -108,8 +108,8 @@ namespace GlobalScripts {
             }
 
             var hitObject = hit.transform.gameObject;
-            Vector2 interact2D = new Vector2(hitObject.transform.position.x, hitObject.transform.position.y);
-            Vector2 self2D = new Vector2(gameObject.transform.position.x, gameObject.transform.position.y);
+            Vector2 interact2D = new Vector2(hitObject.transform.position.x, hitObject.transform.position.z);
+            Vector2 self2D = new Vector2(gameObject.transform.position.x, gameObject.transform.position.z);
             if (hitObject.CompareTag("Clickable") && Vector2.Distance(interact2D, self2D) <= MAX_CLICK_DISTANCE && !isTalking) {
                 var clickable = hitObject.GetComponents<IClickableGameObject>();
                 foreach (var click in clickable) {
