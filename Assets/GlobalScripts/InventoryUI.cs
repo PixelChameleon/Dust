@@ -103,7 +103,6 @@ namespace GlobalScripts {
             InventorySlot slot = button.GetComponent<InventorySlot>();
             if (slot.Item != null && PickedItem == null) {
                 Pickup(slot.Item);
-                Debug.Log("Picked up item");
                 slot.Item = null;
                 PlayerScript.Inventory[slot.slotID] = null;
                 refreshInventory();
@@ -127,7 +126,6 @@ namespace GlobalScripts {
                     Destroy(_follower);
                     refreshInventory();
                     PickedItem = null;
-                    Debug.Log("Dropped item");
                 }
             }
         }

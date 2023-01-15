@@ -13,7 +13,6 @@ public class RespawnPoint : MonoBehaviour {
     }
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("Collide");
         var player = other.gameObject.GetComponent<PlayerScript>();
         if (player == null) {
             return;

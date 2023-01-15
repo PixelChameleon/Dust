@@ -17,6 +17,7 @@ public class MainMenuScript : MonoBehaviour {
 
     public void ResetGame() {
         PlayerPrefs.SetInt("Stromkasten", 0);
+        PlayerPrefs.SetInt("Lagerraum", 0);
     }
     
     public void VolumeChange() {
