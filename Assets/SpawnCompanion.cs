@@ -20,5 +20,6 @@ public class SpawnCompanion : MonoBehaviour, IClickableGameObject {
         player.CompanionButton.SetActive(true);
         comp.GetComponent<CompanionScript>().Talk("Beep-Beep. Gu-ten Ta-g", 5);
         player.RemoveItem(DustManager.ItemRegistry[7]);
+        alreadySpawned = true;
     }
 }

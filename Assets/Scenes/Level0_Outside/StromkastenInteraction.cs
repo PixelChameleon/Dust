@@ -12,7 +12,7 @@ namespace Scenes.Scene01 {
             }
             player.canMove = false;
             stromkasten.SetActive(true);
-
+            stromkasten.GetComponent<StromkastenScript>().ResetCables();
         }
 
     }
