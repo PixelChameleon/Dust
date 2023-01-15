@@ -109,7 +109,7 @@ namespace GlobalScripts.entity {
         }
 
         public void Die(string msg) {
-            // DIE
+            Destroy(gameObject);
         }
 
         public Weapon GetWeapon() {

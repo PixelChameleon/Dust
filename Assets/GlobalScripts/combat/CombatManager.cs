@@ -15,13 +15,22 @@ namespace GlobalScripts.combat {
         public PlayerMove SelectedMove;
 
         public CombatManager(PlayerScript player, DustEntity enemy) {
+            if (player.inCombat) {
+                Debug.LogError(enemy.name + " tried initialising combat while player is already in combat mode.");
+                return;
+            }
+            if (player.Weapon == null) {
+                player.Die("Du wurdest angegriffen und hattest keine Waffe.");
+                player.CombatManager = null;
+                return;
+            }
             Player = player;
             Enemy = enemy;
             enemy.CombatManager = this;
             player.CombatManager = this;
             Debug.Log("Initialized combat between " + player + " and " + enemy);
             player.CombatUI.CombatManager = this;
-            player.CombatUI.enabled = true;
+            player.CombatUI.gameObject.SetActive(true);
             player.inCombat = true;
             enemy.inCombat = true;
             UpdateHealth();
@@ -42,7 +51,6 @@ namespace GlobalScripts.combat {
             Debug.Log("Finished AI turn");
             Player.CombatUI.ActionText.GetComponent<Text>().text = "Warte auf Move...";
         }
-
         public void UpdateHealth() {
             Player.CombatUI.EnemyHP.GetComponent<Slider>().value = Enemy.GetHealth();
             Player.CombatUI.PlayerHP.GetComponent<Slider>().value = Player.GetHealth();
@@ -56,6 +64,9 @@ namespace GlobalScripts.combat {
 
         public void Shoot(ICombatant shooter, ICombatant target) {
             if (shooter.GetWeapon().TurnsUsed >= shooter.GetWeapon().TurnsToReload) {
+                if (target is PlayerScript) {
+                    Player.CombatUI.ActionText.GetComponent<Text>().text = "Munition alle!";
+                }
                 return;
             }
             var shooterPos = shooter.GetGameObject().transform.position;
@@ -66,7 +77,7 @@ namespace GlobalScripts.combat {
             var spawnPos = shooterPos + (direction.normalized * 2);
             var shooterWeapon = shooter.GetWeapon();
             
-            //if (!Physics.Linecast(shooterPos, targetPos)) return ; // Wollen wir schießen erlauben auch wenn Ziel ist nicht sichtbar ist?
+            //if (!Physics.Linecast(shooterPos, targetPos)) return ; // Wollen wir schießen erlauben auch wenn Ziel nicht sichtbar ist?
             
             float offset = 0f;
             var inRange = shooterWeapon.IdealRange < distance;

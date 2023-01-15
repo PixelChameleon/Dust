@@ -11,11 +11,10 @@ public class Guard : DustEntity
     public float speed = 3;
     public float waitTime = 0f;
     public float turnspeed = 90;
-
-    public Light spotlight;
+    
     public float viewDistance;
     public LayerMask viewMask;
-    float viewAngle;
+    //float viewAngle;
 
     public Transform pathHolder;
     PlayerScript player;
@@ -33,9 +32,6 @@ public class Guard : DustEntity
 
         const string Tag = "MainCamera";
         player = GameObject.FindGameObjectWithTag(Tag).transform.gameObject.GetComponent<PlayerScript>();
-        viewAngle = spotlight.spotAngle;
-
-        orginialSpotlightColour = spotlight.color;
 
         Vector3[] waypoints = new Vector3[pathHolder.childCount];
         for (int i = 0; i < waypoints.Length; i++) {
@@ -51,36 +47,25 @@ public class Guard : DustEntity
         base.Update();
 
         if (CanSeePlayer()) {
-
-            spotlight.color = Color.red;
-            if (inCombat) {
-                spotlight.enabled = false;
-            }
-        }
-        else {
-            spotlight.color = orginialSpotlightColour;
         }
     }
 
     bool CanSeePlayer() {
         if(inCombat) {
             return false;
-        }
+        }   
         if( Vector3.Distance(transform.position, player.transform.position) < viewDistance) {
             Vector3 dirToPlayer = (player.transform.position - transform.position).normalized;
             float angleBetweenGuardAndPlayer = Vector3.Angle(transform.forward, dirToPlayer);
-            if(angleBetweenGuardAndPlayer < viewAngle / 2f)
-            {
-                if(!Physics.Linecast(transform.position,player.transform.position,viewMask))
-                {
-                    new CombatManager(player, this);
-                    return true;
-                }
+            Debug.Log("Angle: " + angleBetweenGuardAndPlayer);
+            if(angleBetweenGuardAndPlayer < 30.0f) {
+                new CombatManager(player, this);
+                return true;
             }
         }
         return false;
     }
-
+    
 
     IEnumerator FollowPath(Vector3[] waypoints) {
        
@@ -88,7 +73,7 @@ public class Guard : DustEntity
         transform.position = waypoints[0];
         int targetWaypointIndex = 1;
         Vector3 targetWaypoint = waypoints[targetWaypointIndex];
-        //transform.LookAt(targetWaypoint); - breaks animation anyways
+        transform.LookAt(targetWaypoint);
 
         while (true) {
             if (inCombat) {
@@ -102,7 +87,7 @@ public class Guard : DustEntity
                 targetWaypointIndex = (targetWaypointIndex + 1) % waypoints.Length;
                 targetWaypoint = waypoints[targetWaypointIndex];
                 yield return new WaitForSeconds(waitTime);
-                //yield return StartCoroutine(TurnToFace(targetWaypoint));
+                yield return StartCoroutine(TurnToFace(targetWaypoint));
             }
             yield return null;
         }
