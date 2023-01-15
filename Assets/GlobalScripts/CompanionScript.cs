@@ -44,7 +44,7 @@ public class CompanionScript : MonoBehaviour {
         _box = Instantiate(textBoxPrefab, parent);
         var pos = parent.position;
         pos.y = 1.2f;
-        _box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1.2f, -4f);
+        _box.GetComponent<RectTransform>().anchoredPosition3D = new Vector3(0, 1.2f, 1.2f);
         _box.GetComponent<TextMeshPro>().text = text;
     }
 

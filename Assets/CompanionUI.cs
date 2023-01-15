@@ -2,28 +2,39 @@ using GlobalScripts;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CompanionUI : MonoBehaviour {
 
-    private PlayerScript _player;
-    void Start() {
-        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayerScript>();
-    }
+    
+    private Color _activeColor = new(0, 255, 0, 1);
+    private Color _inactiveColor = new(255, 255, 255, 1f);
 
     public void OnCompanionButtonClick() {
         var button = EventSystem.current.currentSelectedGameObject;
-        if (_player.Companion == null) {
+        var player = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<PlayerScript>();
+        if (player.Companion == null) {
             return;
         }
 
-        var script = _player.Companion.GetComponent<CompanionScript>();
-        if (!_player.CompanionControlMode) {
+        var script = player.Companion.GetComponent<CompanionScript>();
+        if (!player.CompanionControlMode) {
             script.AIEnabled = false;
-            _player.CompanionControlMode = true;
+            player.CompanionControlMode = true;
+            var colorBlock = button.GetComponent<Button>().colors;
+            colorBlock.normalColor = _activeColor;
+            colorBlock.highlightedColor = _activeColor;
+            colorBlock.pressedColor = _activeColor;
+            button.GetComponent<Button>().colors = colorBlock;
         }
         else {
             script.AIEnabled = true;
-            _player.CompanionControlMode = false;
+            player.CompanionControlMode = false;
+            var colorBlock = button.GetComponent<Button>().colors;
+            colorBlock.normalColor = _inactiveColor;
+            colorBlock.highlightedColor = _inactiveColor;
+            colorBlock.pressedColor = _inactiveColor;
+            button.GetComponent<Button>().colors = colorBlock;
         }
     }
 }
