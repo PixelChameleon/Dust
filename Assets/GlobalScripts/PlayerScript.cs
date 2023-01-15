@@ -41,6 +41,7 @@ namespace GlobalScripts {
 
         public GameObject Companion;
         public bool CompanionControlMode = false;
+        public GameObject CompanionButton;
 
 
         public Weapon Weapon;
@@ -74,7 +75,7 @@ namespace GlobalScripts {
             RaycastHit hit;
 
             if (!Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition), out hit, 100) || UnityEngine.EventSystems.EventSystem.current.IsPointerOverGameObject()) return;
-            if (CompanionControlMode && Companion != null) {
+            if (CompanionControlMode && Companion != null && Input.GetMouseButtonDown(0)) {
                 Companion.GetComponent<NavMeshAgent>().destination = hit.point;
                 return;
             }
@@ -114,9 +115,9 @@ namespace GlobalScripts {
             }
 
             var combatant = hitObject.GetComponent<ICombatant>();
-            if (combatant != null && !isTalking && hitObject != gameObject) {
+            if (combatant != null && !isTalking && hitObject != gameObject && !inCombat && combatant is not Guard) {
                 CombatManager = new CombatManager(this, hitObject.GetComponent<DustEntity>());
-                inCombat = !inCombat;
+                inCombat = true;
                 CombatUI.enabled = inCombat;
                 Debug.Log("Combat: " + inCombat + " | Enemy: " + hitObject.name);
                 return;
@@ -178,6 +179,7 @@ namespace GlobalScripts {
 
         public void RemoveItem(ItemStack itemStack) {
             Inventory.Remove(itemStack);
+            InventoryUI.refreshInventory();
         }
 
         public void Damage(int amount) {
@@ -206,7 +208,11 @@ namespace GlobalScripts {
                 transform.position = new Vector3(0, 0, transform.position.z);
             }
             _agent.destination = transform.position;
+            CurrentHealth = MaxHealth;
+            CurrentStamina = MaxStamina;
             canAct = true;
+            inCombat = false;
+            isCombatMoving = false;
         }
 
         public void CheckNewSpawnPoint(RespawnPoint point) {
